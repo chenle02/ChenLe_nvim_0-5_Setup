@@ -124,6 +124,7 @@ require("telescope").load_extension("file_browser")
 require("telescope").load_extension("bookmarks")
 require('telescope').load_extension('neoclip')
 require('telescope').load_extension('media_files')
+require('telescope').load_extension('zoxide')
 -- require("telescope").load_extension("frecency") -- Not successful
 --}}}
 -- Key bindings
@@ -218,14 +219,14 @@ key_map(
 --   [[<Cmd>lua require('telescope').extensions.bookmarks.bookmarks()<CR>]],
 --   { noremap = true, silent = true }
 -- )}}}
---{{{ zoxide: not working
+--{{{ zoxide: \z
 -- -- open zoxide list
--- key_map(
---   "n",
---   "<leader>z",
---   ":lua require'telescope'.extensions.zoxide.list{results_title='Z Directories', prompt_title='Z Prompt'}<CR>",
---   { noremap = true, silent = true }
--- )
+key_map(
+  "n",
+  "<leader>z",
+  ":lua require'telescope'.extensions.zoxide.list{results_title='Z Directories', prompt_title='Z Prompt'}<CR>",
+  { noremap = true, silent = true }
+)
 --}}}
 -- show LSP implementations{{{
 key_map(
@@ -370,6 +371,16 @@ function M.grep_wiki()
   -- opts.file_ignore_patterns = { 'thesaurus/'}
   opts.search_dirs = {
     "~/Dropbox/vimwiki",
+    "~/Dropbox/vimwiki",
+    "~/Dropbox/Teaching/svn_teaching/2020_Fall_Math221/vimwiki",
+    "~/Dropbox/Teaching/svn_teaching/2021_Spring_Math221/vimwiki",
+    "~/Dropbox/Teaching/svn_teaching/2021_Spring_Math362/vimwiki",
+    "~/Dropbox/Teaching/svn_teaching/2021_Fall_Math5870/vimwiki",
+    "~/Dropbox/Teaching/svn_teaching/2021_Fall_STAT3600/vimwiki",
+    "~/Dropbox/Teaching/svn_teaching/2022_Spring_Math7210/vimwiki",
+    "~/Dropbox/workspace/svn/Job-applications/homepage/Auburn/vimwiki",
+    "~/Dropbox/workspace/svn/Article-Feynman-Kac-Formula-FractionalBM/Rough-in-time-Xia/vimwiki",
+    "~/Dropbox/Teaching/svn_teaching/Teaching_Tools",
   }
   opts.file_ignore_patterns = {
       "%.html",
