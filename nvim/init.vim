@@ -330,6 +330,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'kevinhwang91/nvim-hlslens'
     Plug 'mhartington/formatter.nvim'
     Plug 'nvim-telescope/telescope-frecency.nvim'
+    Plug 'tami5/sqlite.lua'
     Plug 'AckslD/nvim-neoclip.lua'
     Plug 'cljoly/telescope-repo.nvim'
     Plug 'jvgrootveld/telescope-zoxide'
@@ -360,6 +361,8 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'dhruvmanila/telescope-bookmarks.nvim'
     Plug 'nvim-telescope/telescope-media-files.nvim'
     Plug 'phaazon/hop.nvim'
+    " Plug 'to268/telescope-doc.nvim'
+    " Plug 'nvim-telescope/telescope-hop.nvim'
     " {{{ Some removed.
     " Plug 'thalesmello/webcomplete.vim'
     " " Set up the browser, default is google Chrome, I am setting it to qutebrowser{{{
@@ -386,6 +389,7 @@ endif
 packloadall
 silent! helptags ALL
 "}}}
+
 "{{{ Plugin
 " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim"
@@ -610,6 +614,8 @@ source ~/.config/nvim/lua/plug-registers.lua
 source ~/.config/nvim/lua/plug-zoxide.lua
 source ~/.config/nvim/lua/plug-nvim-hlsens.lua
 source ~/.config/nvim/lua/plug-hop-nvim.lua
+" source ~/.config/nvim/lua/plug-sqlite.lua
+" source ~/.config/nvim/lua/plug-telescop-doc.lua
 "}}}
 "{{{ some autocmd group for snippets
 augroup snippets

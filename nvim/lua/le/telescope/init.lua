@@ -109,6 +109,19 @@ require('telescope').setup {
       filetypes = {"png", "webp", "jpg", "jpeg"},
       find_cmd = "rg" -- find command (defaults to `fd`)
     },
+  frecency = {
+      db_root = "/home/lechen/.local/share/nvim/",
+      show_scores = false,
+      show_unindexed = true,
+      ignore_patterns = {"*.git/*", "*/tmp/*"},
+      disable_devicons = false,
+      workspaces = {
+        ["conf"]    = "/home/lechen/.config",
+        ["data"]    = "/home/lechen/.local/share",
+        ["project"] = "/home/lechen/Dropbox/workspace/svn/",
+        ["wiki"]    = "/home/lechen/Dropbox/vimwiki"
+      }
+    },
   },
 }
 --}}}
@@ -125,7 +138,8 @@ require("telescope").load_extension("bookmarks")
 require('telescope').load_extension('neoclip')
 require('telescope').load_extension('media_files')
 require('telescope').load_extension('zoxide')
--- require("telescope").load_extension("frecency") -- Not successful
+-- require('telescope').load_extension('hop')
+require("telescope").load_extension("frecency")
 --}}}
 -- Key bindings
 --{{{ ;g, //, \[: my old mappings in vim
