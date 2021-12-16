@@ -1,0 +1,105 @@
+{
+    "languageserver": {
+    "go": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod"],
+      "trace.server": "verbose",
+      "filetypes": ["go"]}
+    },
+    "html.enable": true,
+    "snippets.userSnippetsDirectory": "~/Dropbox/mydotfiles/my_snippets/",
+    "diagnostic.displayByAle": true,
+    "python.jediEnabled": false,
+    "python.setInterpreter": "/usr/bin/python3.8",
+    "tabnine.trigger": ["."],
+    "browser.enable": {
+      "type": "boolean",
+      "default": true,
+      "description": "whether to enable coc-browser"
+    },
+    "browser.shortcut": {
+      "type": "string",
+      "default": "web"
+    },
+    "browser.capacity": {
+      "type": "number",
+      "default": 5,
+      "description": "temp file count to storage the words, 1~10"
+    },
+    "browser.priority": {
+      "type": "number",
+      "default": 5
+    },
+    "browser.port": {
+      "type": "number",
+      "default": 8888,
+      "description": "port used to communication with browser extension, this won't take effect for now, because the update for the chrome extension was denied due to google chrome's security policy"
+    },
+    "browser.minLength": {
+      "type": "number",
+      "default": 4,
+      "description": "Dismiss these words whose length is smaller than this option's value"
+    },
+    "browser.maxLength": {
+      "type": "number",
+      "default": 20,
+      "description": "Dismiss these words whose length is larger than this option's value"
+    },
+    "template.email": {
+      "type": "string",
+      "default": null,
+      "description": "If null, will use the value from `git config --global user.email`"
+    },
+    "template.username": {
+      "type": "string",
+      "default": null,
+      "description": "If null, will use the value from `git config --global user.username`"
+    },
+    "template.license": {
+      "type": "string",
+      "default": "MIT",
+      "description": ""
+    },
+    "template.templatesDirectory": {
+      "type": "string",
+      "default": null,
+      "description": "Directory of template files"
+    },
+  "bookmark.sign": {
+    "type": "string",
+    "default": "B",
+    "description": "Bookmark icon for sign column"
+  },
+  "bookmark.signHl": {
+    "type": "string",
+    "default": "Tag",
+    "description": "Highlight group for sign"
+  }
+"diagnostic-languageserver.filetypes": {
+    "text": ["proselint"]
+},
+"diagnostic-languageserver.linters": {
+    "proselint": {
+        "command": "proselint",
+        "isStdout": true,
+        "isStderr": false,
+        "debounce": 100,
+        "args": ["-"],
+        "offsetLine": 0,
+        "offsetColumn": 0,
+        "sourceName": "proselint",
+        "formatLines": 1,
+        "formatPattern": [
+            "^[^:]+:(\\d+):(\\d+):(\\s)(.*)$",
+            {
+                "line": 1,
+                "column": 2,
+                "security": 3,
+                "message": 4
+            }
+        ],
+        "securities": {
+            " ": "info"
+        }
+    }
+}
