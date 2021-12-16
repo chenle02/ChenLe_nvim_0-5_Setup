@@ -1,0 +1,38 @@
+priority -50
+###########################################################################
+#                            SnipMate Snippets                            #
+###########################################################################
+#{{{ gvar "Global / configuration variable" b
+snippet gvar "Global / configuration variable" b
+if !exists("g:${1:MyUltraImportantVar}")
+	let g:$1 = ${2:"${3:<tab>}"}
+endif
+endsnippet
+#}}}
+#{{{ guard "script reload guard" b
+snippet guard "script reload guard" b
+if exists('${1:did_`!p snip.rv = snip.fn.replace('.','_')`}') || &cp${2: || version < 700}
+	finish
+endif
+let $1 = 1$3
+endsnippet
+#}}}
+#{{{ f "function" b
+snippet f "function" b
+fun ${1:function_name}($2)
+	${3:" code}
+endf
+endsnippet
+#}}}
+#{{{ lua "lua <<EOF" b
+snippet lua "lua <<EOF" b
+"{{{ Set up for $1
+lua <<EOF
+require('${1:plugin_name}').setup {
+	${2:code}
+}
+EOF
+"}}}
+endsnippet
+#}}}
+# vim:ft=snippets:

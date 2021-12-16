@@ -1,0 +1,18 @@
+snippet email "Email Template" b
+ Test... $0, another thing to be done
+ ${2:VISUAL}
+First time to be $1
+endsnippet
+
+snippet case
+case ${1:word} in
+    ${2:pattern} ) $0;;
+esac
+endsnippet
+
+snippet q
+Your age: ${1|<18,18~60,>60|}
+Your height: ${2|<120cm,120cm~180cm,>180cm|}
+endsnippet
+
+# vim:ft=snippets:

@@ -510,6 +510,24 @@ function M.find_mydotfiles()
 end
 key_map("n", ";d", [[<Cmd>lua require'le.telescope'.find_mydotfiles()<CR>]], { noremap = true, silent = true })
 --}}}
+--{{{ grep_wiki: ;s
+function M.grep_dotfiles()
+  local opts = {}
+  opts.hidden = true
+  -- opts.file_ignore_patterns = { 'thesaurus/'}
+  opts.search_dirs = {
+    "~/Dropbox/mydotfiles/",
+  }
+  opts.file_ignore_patterns = {
+      "%.html",
+  }
+  opts.prompt_prefix = "   "
+  opts.prompt_title = " Grep Le's dotfiles"
+  opts.path_display = { "smart" }
+  require("telescope.builtin").live_grep(opts)
+end
+key_map("n", ";s", [[<Cmd>lua require'le.telescope'.grep_dotfiles()<CR>]], { noremap = true, silent = true })
+--}}}
 --{{{ file_explorer: from current directory, ;f
 function M.file_explorer()
   require("telescope").extensions.file_browser.file_browser {
