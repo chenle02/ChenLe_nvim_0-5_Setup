@@ -140,6 +140,9 @@ nnoremap <silent> <leader>[ <cmd>Telescope buffers<cr>
 --{{{ registers: <space>r
 key_map("n", "<space>r", [[<Cmd>lua require'telescope.builtin'.registers()<CR>]], { noremap = true, silent = true })
 --}}}
+--{{{ neoclip: <space>rr, clipboard, using default register plus
+key_map("n", "<space>rr", [[<Cmd>lua require('telescope').extensions.neoclip.plus()<CR>]], { noremap = true, silent = true })
+--}}}
 --{{{ find_files with names that contain cursor word: ,f
 -- find files with names that contain cursor word
 key_map(
@@ -244,17 +247,9 @@ key_map(
   { noremap = true, silent = true }
 )
 --}}}
---{{{ neoclip: not working
--- key_map(
---   "n",
---   "<C-n>",
---   [[<Cmd>lua require('telescope').extensions.neoclip.plus()<CR>]],
---   { noremap = true, silent = true }
--- )
---}}}
 -- Customize the telescope
 local M = {}
---{{{begin github functions
+--{{{ begin github related functions
 --{{{ repo_list: \rl, list repos
 -- requires repo extension
 function M.repo_list()
@@ -296,7 +291,7 @@ key_map("n", "gl", [[<Cmd>lua require'telescope.builtin'.git_commits()<CR>]], { 
 -- git_status - <tab> to toggle staging
 key_map("n", "gs", [[<Cmd>lua require'telescope.builtin'.git_status()<CR>]], { noremap = true, silent = true })
 --}}}
--- end github functions }}}
+-- end github related functions }}}
 --{{{ grep_filtered:
 -- grep_string pre-filtered from grep_prompt
 local function grep_filtered(opts)
