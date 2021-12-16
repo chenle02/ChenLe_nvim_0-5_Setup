@@ -53,32 +53,27 @@ let @x='diwhxda{sd{'
 let @i='di{\it pa}'
 let @r="/textcolor\<cr>hdf}sd{"
 " The following is to add color for the selected text within a line
-vnoremap <C-n> "hdi\textcolor{magenta}{<esc>"hpa}<esc>
+autocmd FileType tex vnoremap <C-n> "hdi\textcolor{magenta}{<esc>"hpa}<esc>
 " The following is to add color for the selected text by lines
-vnoremap <C-m> "hdO\textcolor{magenta}{<cr>}<esc>k"hp<esc>
+autocmd FileType tex vnoremap <C-m> "hdO\textcolor{magenta}{<cr>}<esc>k"hp<esc>
 "}}}
 " 6. The following transform \| ... \| to \Norm{...} in the current line.{{{
 " test here: \|a asdf.. adf\|
 " Either of the following two will give the same result.
-nnoremap <c-n><c-n> :s/\\\|\(.*\)\\\|/\\Norm{\1}/g<c-b>
+autocmd FileType tex nnoremap <c-n><c-n> :s/\\\|\(.*\)\\\|/\\Norm{\1}/g<c-b>
 "}}}
 " 7. gF: The following is to open latex file without extension.{{{
 " Created one if it does not exist.
-noremap gF :vsplit <cfile>.tex<cr>
+autocmd FileType tex noremap gF :vsplit <cfile>.tex<cr>
 "}}}
 " 8. bb: The following command align equations.{{{
 " This requires easyalign plugin.
-nmap bb viega*&
+autocmd FileType tex nmap bb viega*&
 " nnoremap bb vie:EasyAlign *&<cr>
 "}}}
-" 9. visual <c-r>: replace/substitute the visual selected part.{{{
-" register h will be used for this purpose.
-vnoremap <C-r> "hy:bufdo %s/<C-r>h//gc<left><left><left>
-vnoremap <C-r><C-r> "hy:%s/<C-r>h//gc<left><left><left>
-"}}}
 " 10. The following command is to pdf file all indent from ../refs/ folder.{{{
-nnoremap gtt :/\%<c-r>=line('.')<cr>lcite{<CR>n5lyt}:!zathura ./refs/<C-r>".pdf &
-vnoremap gtt "hy:!zathura ./refs/<C-r>h.pdf &
+autocmd FileType tex nnoremap gtt :/\%<c-r>=line('.')<cr>lcite{<CR>n5lyt}:!zathura ./refs/<C-r>".pdf &
+autocmd FileType tex vnoremap gtt "hy:!zathura ./refs/<C-r>h.pdf &
 "}}}
 " 10. Switch $$...$$ to \begin{align} ... \end{align}
 " let @e = "\<ESC>?$$\<CR>ddO\\begin{align}\<ESC>/$$\<CR>ddO\\end{align}\<ESC>"
@@ -86,8 +81,8 @@ let @e="di\$o\\begin{align*}\<CR>\<Esc>po\\end{align*}\<Esc>?\$\$\<CR>dd"
 " let @e="dd"
 " Switch \[...\] to \begin{align} ... \end{align}
 " nnoremap <leader>e :normal! mm?$$<cr>ddO\begin{align}<esc>/$$<cr>ddO\end{align}<esc>'m
-nnoremap <leader>e :normal! mm/\$\$<cr>Nxxi\begin{align*}<cr><esc>nxxo\end{align*}<esc>'m
-nnoremap <leader>r :normal! vi{"9ydi{diW"9pa<space><esc><cr>
+autocmd FileType tex nnoremap <leader>e :normal! mm/\$\$<cr>Nxxi\begin{align*}<cr><esc>nxxo\end{align*}<esc>'m
+autocmd FileType tex nnoremap <leader>r :normal! vi{"9ydi{diW"9pa<space><esc><cr>
 " 11. The following is to use dmenu to open things.
 " https://leafo.net/posts/using_dmenu_to_open_quickly.html
 " Strip the newline from the end of a string
@@ -104,9 +99,9 @@ function! DmenuOpen(cmd,files)
   execute a:cmd . " " . fname ." &"
 endfunction
 " Open files with dmenu.
-nnoremap <leader>rr :call DmenuOpen("!zathura","refs/*.pdf")<cr>
-nnoremap <leader>rm :call DmenuOpen("!mathematica","codes/*.nb")<cr>
-nnoremap <leader>rd :call DmenuOpen("!zathura","Discussions/*.pdf *.pdf")<cr>
+autocmd FileType tex nnoremap <leader>rr :call DmenuOpen("!zathura","refs/*.pdf")<cr>
+autocmd FileType tex nnoremap <leader>rm :call DmenuOpen("!mathematica","codes/*.nb")<cr>
+autocmd FileType tex nnoremap <leader>rd :call DmenuOpen("!zathura","Discussions/*.pdf *.pdf")<cr>
 " 12. The following is for Zathura forward search
 " Double hit ff in normal mode for forward locate to the position in pdf file viewed in zathura
 function! SyncTexForward()
@@ -117,7 +112,7 @@ function! SyncTexForward()
   let execstr="!zathura --synctex-forward " . linenumber . ":" . colnumber . ":" . filename . " " . filenamePDF . "&>/dev/null &"
   exec execstr
 endfunction
-noremap ff :call SyncTexForward()<CR>
+autocmd FileType tex noremap ff :call SyncTexForward()<CR>
 " The following is the setup when in the vimdiff mode.
 if &diff
 	autocmd FileType tex nnoremap <silent> <space><space> :windo call SyncTexForward()<CR> <c-w>w

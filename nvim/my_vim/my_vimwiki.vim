@@ -86,22 +86,22 @@ let wiki_TeachingTools.template_ext = '.tpl'
 "}}}
 let g:vimwiki_list = [
       \ wiki_default,
+      \ wiki_Math7210_2022Spring,
       \ wiki_Math362_2021Spring,
       \ wiki_Math221_2021Spring,
       \ wiki_Math221_2020Fall,
       \ wiki_Math5870_2021Fall,
       \ wiki_STAT3600_2021Fall,
-      \ wiki_Math7210_2022Spring,
       \ wiki_Homepage,
       \ ]
 "}}}
 "{{{ Other setups
 command! Diary VimwikiDiaryIndex
 augroup vimwikigroup
-autocmd!
-" automatically update links on read diary
-autocmd BufNewFile ~/Dropbox/vimwiki/diary/*.wiki :silent 0r !~/bin/generate-vimwiki-diary-template '%:t'
-autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
+      autocmd!
+      " automatically update links on read diary
+      autocmd BufNewFile ~/Dropbox/vimwiki/diary/*.wiki :silent 0r !~/bin/generate-vimwiki-diary-template '%:t'
+      autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
 augroup end
 command! VimwikiDiaryTemplate :silent 0r !~/bin/generate-vimwiki-diary-template '%:t'
 command! VimwikiDiaryCal :silent r !vimwikical

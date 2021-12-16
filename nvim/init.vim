@@ -232,7 +232,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-eunuch'                             "
     Plug 'dense-analysis/ale'                           "
     Plug 'jiangmiao/auto-pairs'                         "
-    Plug 'justinmk/vim-sneak'                           "
+    " Plug 'justinmk/vim-sneak'                           "
     Plug 'mkitt/tabline.vim'                            "
     Plug 'itspriddle/vim-shellcheck'                    "
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } "
@@ -359,6 +359,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-telescope/telescope-file-browser.nvim'
     Plug 'dhruvmanila/telescope-bookmarks.nvim'
     Plug 'nvim-telescope/telescope-media-files.nvim'
+    Plug 'phaazon/hop.nvim'
     " {{{ Some removed.
     " Plug 'thalesmello/webcomplete.vim'
     " " Set up the browser, default is google Chrome, I am setting it to qutebrowser{{{
@@ -410,7 +411,7 @@ call vundle#begin()
     Plugin 'ludovicchabant/vim-gutentags'
     Plugin 'dhruvasagar/vim-table-mode'
     Plugin 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " for VimPlug
-    Plugin 'easymotion/vim-easymotion'
+    " Plugin 'easymotion/vim-easymotion'
     Plugin 'ntpeters/vim-better-whitespace'
     Plugin 'wesQ3/vim-windowswap'
     Plugin 'othree/yajs.vim'
@@ -572,7 +573,7 @@ source ~/.config/nvim/my_vim/my_Jupiter.vim
 source ~/.config/nvim/my_vim/my_markdown.vim
 source ~/.config/nvim/my_vim/my_neomutt.vim
 source ~/.config/nvim/my_vim/my_ultisnips.vim
-source ~/.config/nvim/my_vim/my_vim-easymotion.vim
+" source ~/.config/nvim/my_vim/my_vim-easymotion.vim
 source ~/.config/nvim/my_vim/my_vim-gutentags.vim
 source ~/.config/nvim/my_vim/my_vim-javascript.vim
 source ~/.config/nvim/my_vim/my_vim-markdown.vim
@@ -608,6 +609,7 @@ source ~/.config/nvim/lua/plug-surround.lua
 source ~/.config/nvim/lua/plug-registers.lua
 source ~/.config/nvim/lua/plug-zoxide.lua
 source ~/.config/nvim/lua/plug-nvim-hlsens.lua
+source ~/.config/nvim/lua/plug-hop-nvim.lua
 "}}}
 "{{{ some autocmd group for snippets
 augroup snippets
@@ -662,11 +664,11 @@ set foldmethod=marker
 "{{{ Some other key mappings and settings
 nnoremap <silent> <leader>gg :LazyGit<CR>
 nnoremap <space>p :PencilToggle<cr>
-let g:sneak#label = 1
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
+" Visual <c-r>: replace/substitute the visual selected part.{{{
+" register h will be used for this purpose.
+vnoremap <C-r> "hy:bufdo %s/<C-r>h//gc<left><left><left>
+vnoremap <C-r><C-r> "hy:%s/<C-r>h//gc<left><left><left>
+"}}}
 nmap <F9> :TagbarToggle<CR>
 set encoding=utf8
 set guifont=Hermit\ Nerd\ Font\ 11
