@@ -233,6 +233,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'dense-analysis/ale'                           "
     Plug 'jiangmiao/auto-pairs'                         "
     " Plug 'justinmk/vim-sneak'                           "
+    Plug 'tpope/vim-surround'                           "
     Plug 'mkitt/tabline.vim'                            "
     Plug 'itspriddle/vim-shellcheck'                    "
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } "
@@ -348,7 +349,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-treesitter/playground'
     Plug 'mizlan/iswap.nvim'
     Plug 'p00f/nvim-ts-rainbow'
-    Plug 'blackCauldron7/surround.nvim'
+    " Plug 'blackCauldron7/surround.nvim'
     Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
     Plug 'kyazdani42/nvim-web-devicons' " for file icons
     Plug 'kyazdani42/nvim-tree.lua'
@@ -361,6 +362,17 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'dhruvmanila/telescope-bookmarks.nvim'
     Plug 'nvim-telescope/telescope-media-files.nvim'
     Plug 'phaazon/hop.nvim'
+    Plug 'lewis6991/impatient.nvim'
+    Plug 'mhartington/oceanic-next'
+    Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+    Plug 'RRethy/vim-illuminate'
+    Plug 'sainnhe/everforest'
+    Plug 'akinsho/bufferline.nvim'
+    Plug 'rcarriga/nvim-notify'
+    Plug 'projekt0n/github-nvim-theme'
+    Plug 'ellisonleao/glow.nvim'
+    Plug 'ElPiloto/telescope-vimwiki.nvim'
+    Plug 'Th3Whit3Wolf/one-nvim'
     " Plug 'to268/telescope-doc.nvim'
     " Plug 'nvim-telescope/telescope-hop.nvim'
     " {{{ Some removed.
@@ -609,11 +621,15 @@ source ~/.config/nvim/lua/plug-nvim-treesitter.lua
 source ~/.config/nvim/lua/plug-nvim_tree.lua
 source ~/.config/nvim/lua/plug-lsp_installer.lua
 source ~/.config/nvim/lua/plug-octo.lua
-source ~/.config/nvim/lua/plug-surround.lua
+" source ~/.config/nvim/lua/plug-surround.lua
 source ~/.config/nvim/lua/plug-registers.lua
 source ~/.config/nvim/lua/plug-zoxide.lua
 source ~/.config/nvim/lua/plug-nvim-hlsens.lua
 source ~/.config/nvim/lua/plug-hop-nvim.lua
+source ~/.config/nvim/lua/plug-impatient.lua
+source ~/.config/nvim/lua/plug-bufferline-nvim.lua
+source ~/.config/nvim/lua/plug-notify.lua
+source ~/.config/nvim/lua/plug-glow.lua
 " source ~/.config/nvim/lua/plug-sqlite.lua
 " source ~/.config/nvim/lua/plug-telescop-doc.lua
 "}}}
@@ -647,11 +663,18 @@ set background=dark
 " colorscheme monokai
 " colorscheme sublimemonokai
 " colorscheme vitaminonec
-colorscheme one
+" colorscheme one
 " colorscheme nvcode
 " colorscheme highlite
 " colorscheme iceberg
-" colorscheme seoul256
+colorscheme seoul256
+" colorscheme everforest
+" let g:everforest_background = 'hard'
+" let g:airline_theme = 'everforest'
+" colorscheme OceanicNext
+" colorscheme tokyonight
+" colorscheme one-nvim
+" vim.g.one_nvim_transparent_bg = true
 " Make transparent background in vim
 " hi Normal guibg=NONE ctermbg=NONE
 syntax enable

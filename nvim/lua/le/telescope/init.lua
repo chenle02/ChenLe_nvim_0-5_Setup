@@ -140,6 +140,8 @@ require('telescope').load_extension('media_files')
 require('telescope').load_extension('zoxide')
 -- require('telescope').load_extension('hop')
 require("telescope").load_extension("frecency")
+require('telescope').load_extension('vw')
+-- require('telescope').extensions.notify.notify(<opts>)
 --}}}
 -- Key bindings
 --{{{ ;g, //, \[: my old mappings in vim
@@ -151,11 +153,11 @@ nnoremap <silent> <leader>[ <cmd>Telescope buffers<cr>
 ]])
 --}}}
 -- TELESCOPE keymaps  --
---{{{ registers: <space>r
-key_map("n", "<space>r", [[<Cmd>lua require'telescope.builtin'.registers()<CR>]], { noremap = true, silent = true })
+--{{{ registers: <space>rr
+key_map("n", "<space>rr", [[<Cmd>lua require'telescope.builtin'.registers()<CR>]], { noremap = true, silent = true })
 --}}}
---{{{ neoclip: <space>rr, clipboard, using default register plus
-key_map("n", "<space>rr", [[<Cmd>lua require('telescope').extensions.neoclip.plus()<CR>]], { noremap = true, silent = true })
+--{{{ neoclip: <space>r, clipboard, using default register plus
+key_map("n", "<space>r", [[<Cmd>lua require('telescope').extensions.neoclip.plus()<CR>]], { noremap = true, silent = true })
 --}}}
 --{{{ find_files with names that contain cursor word: ,f
 -- find files with names that contain cursor word
@@ -242,6 +244,23 @@ key_map(
   "n",
   "<leader>z",
   ":lua require'telescope'.extensions.zoxide.list{results_title='Z Directories', prompt_title='Z Prompt'}<CR>",
+  { noremap = true, silent = true }
+)
+--}}}
+--{{{ frequency: ``
+-- -- open frequency list
+key_map(
+  "n",
+  "``",
+  "<Cmd>lua require('telescope').extensions.frecency.frecency()<CR>",
+  {noremap = true, silent = true}
+)
+--}}}
+--{{{ telescope notify history: \nh
+key_map(
+  "n",
+  "<leader>nh",
+  [[<Cmd>lua require('telescope').extensions.notify.notify({results_title='Notification History', prompt_title='Search Messages'})<CR>]],
   { noremap = true, silent = true }
 )
 --}}}
