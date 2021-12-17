@@ -1073,3 +1073,5 @@ config
 init
 DarkGreen
 ctermfg
+djvu
+fd

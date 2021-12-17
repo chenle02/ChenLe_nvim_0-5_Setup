@@ -106,7 +106,7 @@ require('telescope').setup {
     media_files = {
       -- filetypes whitelist
       -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = {"png", "webp", "jpg", "jpeg"},
+      -- filetypes = {"png", "webp", "jpg", "jpeg","pdf","djvu"},
       find_cmd = "rg" -- find command (defaults to `fd`)
     },
   frecency = {
@@ -256,6 +256,24 @@ key_map(
   {noremap = true, silent = true}
 )
 --}}}
+--{{{ media_files: \m to copy, <space>m open in zathura
+-- -- open frequency list
+key_map(
+  "n",
+  "<leader>m",
+  "<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>",
+  {noremap = true, silent = true}
+)
+-- key_map(
+--   "n",
+--   "<space>m",
+--   "<Cmd>!zathura <Ctrl-r>+<CR>",
+--   {noremap = true, silent = true}
+-- )
+vim.cmd([[
+  noremap <space>m :!zathura +\&
+]])
+--}}}
 --{{{ telescope notify history: \nh
 key_map(
   "n",
@@ -279,6 +297,12 @@ key_map(
   [[<Cmd>lua require'telescope.builtin'.lsp_definitions({layout_config = { preview_width = 0.50, width = 0.92 }, path_display = { "shorten" }, results_title='Definitions'})<CR>]],
   { noremap = true, silent = true }
 )
+--}}}
+--{{{ Turn off word suggestions in telescope
+-- " https://github.com/nvim-telescope/telescope.nvim/issues/
+vim.cmd([[
+  autocmd FileType TelescopePrompt call deoplete#custom#buffer_option('auto_complete', v:false)
+]])
 --}}}
 -- Customize the telescope
 local M = {}
@@ -473,6 +497,9 @@ local my_ignores ={
       "%.js",
       "%.h",
       "%.ind",
+      "%.zip",
+      "%.doc",
+      "%.docx",
 }--}}}
 function M.grep_research_latex()
   local opts = {}
@@ -549,7 +576,7 @@ function M.find_mydotfiles()
 end
 key_map("n", ";d", [[<Cmd>lua require'le.telescope'.find_mydotfiles()<CR>]], { noremap = true, silent = true })
 --}}}
---{{{ grep_wiki: ;s
+--{{{ grep_dotfiles: ;s
 function M.grep_dotfiles()
   local opts = {}
   opts.hidden = true
