@@ -299,10 +299,20 @@ key_map(
 )
 --}}}
 --{{{ Turn off word suggestions in telescope
--- " https://github.com/nvim-telescope/telescope.nvim/issues/
-vim.cmd([[
-  autocmd FileType TelescopePrompt call deoplete#custom#buffer_option('auto_complete', v:false)
-]])
+-- https://github.com/nvim-telescope/telescope.nvim/issues/94
+vim.g.completion_chain_complete_list = {
+	default = {
+		{ complete_items = { "lsp", "path", "buffers", "snippet" } },
+		{ mode = "<c-p>" },
+		{ mode = "<c-n>" },
+	},
+	TelescopePrompt = {},
+	frecency = {},
+}
+-- https://github.com/nvim-telescope/telescope.nvim/issues/161
+-- vim.cmd([[
+--   autocmd FileType TelescopePrompt call deoplete#custom#buffer_option('auto_complete', v:false)
+-- ]])
 --}}}
 -- Customize the telescope
 local M = {}
