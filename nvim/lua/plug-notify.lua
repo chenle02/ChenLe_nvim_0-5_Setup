@@ -33,8 +33,8 @@ require("notify").setup({
     TRACE = "✎",
   },
 })
-require("notify")("Welcome Le~!", "info")
-require("notify")("Here is an sample error message.", "error")
+-- require("notify")("Welcome Le~!", "info")
+-- require("notify")("Here is an sample error message.", "error")
 
 vim.cmd([[
 highlight NotifyERRORBorder guifg=#8A1F1F

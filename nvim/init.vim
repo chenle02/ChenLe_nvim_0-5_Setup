@@ -98,8 +98,8 @@ nnoremap <leader>] :e #<CR>
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>wq :wq<CR>
-nnoremap <leader>q :q<CR>
-nnoremap <leader>qq :q!<CR>
+nnoremap <silent>qq :q<CR>
+" nnoremap <leader>qq :q!<CR>
 nnoremap .m :set foldmethod=marker<CR>
 " Insert new line without leaving Normal mode
 " nnoremap <Leader>o o<Esc>
@@ -197,9 +197,9 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'ervandew/supertab'
     Plug 'junegunn/vim-easy-align'                      " Align
     Plug 'lervag/vimtex'                                " For latex
-    Plug 'mbbill/undotree'			" Undotree
+    " Plug 'mbbill/undotree'			" Undotree
     Plug 'nathanaelkane/vim-indent-guides'              " Indent
-    Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
+    " Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
     Plug 'mattn/emmet-vim'                              " Html
     " The followings are github related
     Plug 'tpope/vim-fugitive'                           "
@@ -227,10 +227,10 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'kumavale/vim-weather'                         "
     Plug 'prabirshrestha/async.vim'                     "
     Plug 'neomake/neomake'                              "
-    Plug 'neoclide/coc.nvim', {'release': 'release'}
+    " Plug 'neoclide/coc.nvim', {'release': 'release'}
     Plug 'mhinz/vim-startify'                           "
     Plug 'tpope/vim-eunuch'                             "
-    Plug 'dense-analysis/ale'                           "
+    " Plug 'dense-analysis/ale'                           "
     Plug 'jiangmiao/auto-pairs'                         "
     " Plug 'justinmk/vim-sneak'                           "
     Plug 'tpope/vim-surround'                           "
@@ -273,12 +273,12 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'jpalardy/vim-slime'
     Plug  'neomutt/neomutt.vim' 			" for Syntex hightlighting
     Plug 'felipec/notmuch-vim' " NotMuch
-    Plug 'jceb/vim-orgmode'		" This is for Emacs OrgMod
+    " Plug 'jceb/vim-orgmode'		" This is for Emacs OrgMod
     Plug 'vim-scripts/utl.vim'
     Plug 'chrisbra/NrrwRgn'		" This is for narrow region feature from Emacs
     Plug 'AndrewRadev/splitjoin.vim'	" split joint
     Plug 'voldikss/vim-floaterm'
-    Plug 'terryma/vim-multiple-cursors'
+    " Plug 'terryma/vim-multiple-cursors'
     Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'milkypostman/vim-togglelist'
     Plug 'preservim/tagbar'
@@ -293,7 +293,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'ryanoasis/vim-devicons' 		" For file icons
     Plug 'dcbaker/vim-abook'
     Plug 'szw/vim-dict'
-    Plug 'puremourning/vimspector'
+    " Plug 'puremourning/vimspector'
     Plug 'szw/vim-maximizer'
     Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
     Plug 'reedes/vim-wordy'
@@ -322,12 +322,11 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
     Plug 'nvim-telescope/telescope-fzy-native.nvim'
-    Plug 'nvim-lua/completion-nvim'
     Plug 'prabirshrestha/vim-lsp'
     Plug 'hoob3rt/lualine.nvim'
     Plug 'neovim/nvim-lspconfig'
     Plug 'williamboman/nvim-lsp-installer'
-    Plug 'glepnir/lspsaga.nvim'
+    " Plug 'glepnir/lspsaga.nvim'
     Plug 'kevinhwang91/nvim-hlslens'
     Plug 'mhartington/formatter.nvim'
     Plug 'nvim-telescope/telescope-frecency.nvim'
@@ -335,15 +334,15 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'AckslD/nvim-neoclip.lua'
     Plug 'cljoly/telescope-repo.nvim'
     Plug 'jvgrootveld/telescope-zoxide'
-    Plug 'fannheyward/telescope-coc.nvim'
+    " Plug 'fannheyward/telescope-coc.nvim'
     Plug 'pwntester/octo.nvim'
-    Plug 'ms-jpq/coq_nvim'
-    Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-    Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
+    " Plug 'ms-jpq/coq_nvim'
+    " Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+    " Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
     Plug 'kdheepak/lazygit.nvim'
     Plug 'sindrets/diffview.nvim'
     Plug 'lewis6991/gitsigns.nvim'
-    Plug 'TimUntersberger/neogit'
+    " Plug 'TimUntersberger/neogit'
     Plug 'numToStr/Comment.nvim'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch' : '0.5-compat'}
     Plug 'nvim-treesitter/playground'
@@ -363,16 +362,16 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-telescope/telescope-media-files.nvim'
     Plug 'phaazon/hop.nvim'
     Plug 'lewis6991/impatient.nvim'
-    Plug 'mhartington/oceanic-next'
-    Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+    " Plug 'mhartington/oceanic-next'
+    " Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
     Plug 'RRethy/vim-illuminate'
     Plug 'sainnhe/everforest'
-    Plug 'akinsho/bufferline.nvim'
+    " Plug 'akinsho/bufferline.nvim'
     Plug 'rcarriga/nvim-notify'
     Plug 'projekt0n/github-nvim-theme'
     Plug 'ellisonleao/glow.nvim'
     Plug 'ElPiloto/telescope-vimwiki.nvim'
-    Plug 'Th3Whit3Wolf/one-nvim'
+    " Plug 'Th3Whit3Wolf/one-nvim'
     " Plug 'to268/telescope-doc.nvim'
     " Plug 'nvim-telescope/telescope-hop.nvim'
     " {{{ Some removed.
@@ -429,10 +428,10 @@ call vundle#begin()
     Plugin 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " for VimPlug
     " Plugin 'easymotion/vim-easymotion'
     Plugin 'ntpeters/vim-better-whitespace'
-    Plugin 'wesQ3/vim-windowswap'
+    " Plugin 'wesQ3/vim-windowswap'
     Plugin 'othree/yajs.vim'
-    Plugin 'pangloss/vim-javascript'
-    Plugin 'grvcoelho/vim-javascript-snippets'
+    " Plugin 'pangloss/vim-javascript'
+    " Plugin 'grvcoelho/vim-javascript-snippets'
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -557,15 +556,15 @@ noremap gx :call HandleURL()<cr>"
 " Run the following command to list all vim config files
 " :r !ls my_vim
 source ~/.config/nvim/my_vim/abbreviations.vim
-source ~/.config/nvim/my_vim/coc-snippets_source.vim
-source ~/.config/nvim/my_vim/coc_source.vim
+" source ~/.config/nvim/my_vim/coc-snippets_source.vim
+" source ~/.config/nvim/my_vim/coc_source.vim
 source ~/.config/nvim/my_vim/grep-operator.vim
 source ~/.config/nvim/my_vim/LatexProject.vim
 " source ~/.config/nvim/my_vim/my_dotoo.vim
 source ~/.config/nvim/my_vim/my_ctrlsf.vim
 source ~/.config/nvim/my_vim/my_vim-wordy.vim
 source ~/.config/nvim/my_vim/my_tabline.vim
-source ~/.config/nvim/my_vim/my_ale.vim
+" source ~/.config/nvim/my_vim/my_ale.vim
 source ~/.config/nvim/my_vim/my_vim-abook.vim
 source ~/.config/nvim/my_vim/my_goyo.vim
 source ~/.config/nvim/my_vim/my_vim-lexical.vim
@@ -576,7 +575,7 @@ source ~/.config/nvim/my_vim/my_vim-floaterm.vim
 source ~/.config/nvim/my_vim/my_vim-slime.vim
 source ~/.config/nvim/my_vim/my_vim-highlightedyank.vim
 source ~/.config/nvim/my_vim/my_vim-dict.vim
-source ~/.config/nvim/my_vim/my_Nvim-R.vim
+" source ~/.config/nvim/my_vim/my_Nvim-R.vim
 source ~/.config/nvim/my_vim/my_vim-weather.vim
 source ~/.config/nvim/my_vim/my_seol256.vim
 source ~/.config/nvim/my_vim/my_vim-startify.vim
@@ -585,13 +584,13 @@ source ~/.config/nvim/my_vim/my_undotree.vim
 source ~/.config/nvim/my_vim/my_lightline.vim
 source ~/.config/nvim/my_vim/my_vim-one.vim
 source ~/.config/nvim/my_vim/my_fzf.vim
-source ~/.config/nvim/my_vim/my_Jupiter.vim
+" source ~/.config/nvim/my_vim/my_Jupiter.vim
 source ~/.config/nvim/my_vim/my_markdown.vim
 source ~/.config/nvim/my_vim/my_neomutt.vim
 source ~/.config/nvim/my_vim/my_ultisnips.vim
 " source ~/.config/nvim/my_vim/my_vim-easymotion.vim
 source ~/.config/nvim/my_vim/my_vim-gutentags.vim
-source ~/.config/nvim/my_vim/my_vim-javascript.vim
+" source ~/.config/nvim/my_vim/my_vim-javascript.vim
 source ~/.config/nvim/my_vim/my_vim-markdown.vim
 source ~/.config/nvim/my_vim/my_vim-session.vim
 source ~/.config/nvim/my_vim/my_vim-table-mode.vim
@@ -616,7 +615,7 @@ source ~/.config/nvim/lua/plug-iswap.lua
 source ~/.config/nvim/lua/plug-lsp_installer.lua
 source ~/.config/nvim/lua/plug-lspconfig.lua
 source ~/.config/nvim/lua/plug-neoclip.lua
-source ~/.config/nvim/lua/plug-neogit.lua
+" source ~/.config/nvim/lua/plug-neogit.lua
 source ~/.config/nvim/lua/plug-nvim-treesitter.lua
 source ~/.config/nvim/lua/plug-nvim_tree.lua
 source ~/.config/nvim/lua/plug-lsp_installer.lua

@@ -107,7 +107,8 @@ require('telescope').setup {
       -- filetypes whitelist
       -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
       -- filetypes = {"png", "webp", "jpg", "jpeg","pdf","djvu"},
-      find_cmd = "rg" -- find command (defaults to `fd`)
+      filetypes = {"png", "webp", "jpg", "jpeg","pdf", "djvu"},
+      -- find_cmd = "rg" -- find command (defaults to `fd`)
     },
   frecency = {
       db_root = "/home/lechen/.local/share/nvim/",
@@ -130,7 +131,7 @@ require('telescope').setup {
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('fzy_native')
-require('telescope').load_extension('coc')
+-- require('telescope').load_extension('coc')
 require("telescope").load_extension("gh")
 require("telescope").load_extension("repo")
 require("telescope").load_extension("file_browser")
@@ -138,7 +139,6 @@ require("telescope").load_extension("bookmarks")
 require('telescope').load_extension('neoclip')
 require('telescope').load_extension('media_files')
 require('telescope').load_extension('zoxide')
--- require('telescope').load_extension('hop')
 require("telescope").load_extension("frecency")
 require('telescope').load_extension('vw')
 -- require('telescope').extensions.notify.notify(<opts>)
@@ -256,22 +256,22 @@ key_map(
   {noremap = true, silent = true}
 )
 --}}}
---{{{ media_files: \m to copy, <space>m open in zathura
+--{{{ media_files: <space>m to copy, <space>mm open in zathura
 -- -- open frequency list
 key_map(
   "n",
-  "<leader>m",
+  "<space>m",
   "<Cmd>lua require('telescope').extensions.media_files.media_files()<CR>",
   {noremap = true, silent = true}
 )
 -- key_map(
 --   "n",
---   "<space>m",
+--   "<space>mm",
 --   "<Cmd>!zathura <Ctrl-r>+<CR>",
 --   {noremap = true, silent = true}
 -- )
 vim.cmd([[
-  noremap <space>m :!zathura +\&
+  nnoremap <silent> <space>mm :!zathura "+\" &<CR>
 ]])
 --}}}
 --{{{ telescope notify history: \nh
@@ -448,11 +448,14 @@ function M.grep_wiki()
       "%.html",
   }
   opts.prompt_prefix = "   "
-  opts.prompt_title = " Grep Le's Wiki"
+  opts.prompt_title = " Live grep Le's Wiki contents"
   opts.path_display = { "smart" }
   require("telescope.builtin").live_grep(opts)
 end
 key_map("n", ";w", [[<Cmd>lua require'le.telescope'.grep_wiki()<CR>]], { noremap = true, silent = true })
+--}}}
+--{{{ telescope vm: ;ww, for files.
+key_map("n", ";ww", [[<Cmd>Telescope vw<CR>]], { noremap = true, silent = true })
 --}}}
 --{{{ grep_research_latex: .r
 --{{{ my_ignores: First define the ignore files:
@@ -521,7 +524,7 @@ function M.grep_research_latex()
   -- opts.file_ignore_patterns = table.insert(my_ignores, "%.txt")
   opts.file_ignore_patterns = my_ignores
   opts.prompt_prefix = "   "
-  opts.prompt_title = " Grep Le's research directory"
+  opts.prompt_title = " Live grep Le's research directory"
   opts.path_display = { "smart" }
   require("telescope.builtin").live_grep(opts)
 end

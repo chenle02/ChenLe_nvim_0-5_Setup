@@ -37,6 +37,7 @@
     nmap <buffer> dd <Plug>(fern-action-remove)
     nmap <buffer> m <Plug>(fern-action-move)
     nmap <buffer> c <Plug>(fern-action-copy)
+    nmap <buffer> cc <Plug>(fern-action-cd)
     nmap <buffer> r <Plug>(fern-action-rename)
     nmap <buffer> za <Plug>(fern-action-hidden:toggle)
     nmap <buffer> R <Plug>(fern-action-reload)
