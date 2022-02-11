@@ -35,4 +35,19 @@ EOF
 "}}}
 endsnippet
 #}}}
+#{{{ fun "Function" b
+snippet fun "Function" b
+function! PapisBibtexRef()
+  let l:temp = tempname()
+  echom l:temp
+  silent exec "!papis bibtex ref -o ".l:temp
+  let l:olda = @a
+  let @a = join(readfile(l:temp), ',')
+  normal! "ap
+  redraw!
+  let @a = l:olda
+endfunction
+autocmd FileType tex noremap <silent> <leader><leader> :call PapisBibtexRef()<cr>
+endsnippet
+#}}}
 # vim:ft=snippets:

@@ -2,51 +2,54 @@ priority -50
 
 snippet online "Online resource" b
 @online{${1:name},
-	author={${2:author}},
-	title={${3:title}},
-	date={${4:date}},
-	url={${5:url}}
+	AUTHOR = {${2:author}},
+	TITLE  = {${3:title}},
+	DATE   = {${4:date}},
+	URL    = {${5:url}}
 }
 $0
 endsnippet
 
 snippet article "Article reference" b
 @article{${1:name},
-	author={${2:author}},
-	title={${3:title}},
-	journaltitle={${4:journal}},
-	volume={${5:NN}},
-	number={${6:NN}},
-	year={${7:YYYY}},
-	pages={${8:NN}--${9:NN}}
+	AUTHOR   = {${2:author}},
+	TITLE    = {${3:title}},
+	JOURNAL  = {${4:journal}},
+	FJOURNAL = {${4:journal}},
+	VOLUME   = {${5:NN}},
+	NUMBER   = {${6:NN}},
+	YEAR     = {${7:YYYY}},
+	PAGES    = {${8:NN}--${9:NN}},
+	DOI      = {},
+	URL      = {},
 }
 $0
 endsnippet
 
 snippet book "Book reference" b
 @book{${1:name},
-	author={${2:author}},
-	title={${3:title}},
-	subtitle={${4:subtitle}},
-	year={${5:YYYY}},
-	location={${6:somewhere}},
-	publisher={${7:publisher}},
-	pages={${8:NN}--${9:NN}}
+	AUTHOR    = {${2:author}},
+	TITLE     = {${3:title}},
+	SUBTITLE  = {${4:subtitle}},
+	YEAR      = {${5:YYYY}},
+	LOCATION  = {${6:somewhere}},
+	PUBLISHER = {${7:publisher}},
+	PAGES     = {${8:NN}--${9:NN}}
 }
 $0
 endsnippet
 
 snippet inb "In Book reference" b
 @inbook{${1:name},
-	author={${2:author}},
-	title={${3:title}},
-	subtitle={${4:subtitle}},
-	booktitle={${5:book}},
-	editor={${6:editor}},
-	year={${7:YYYY}},
-	location={${8:somewhere}},
-	publisher={${9:publisher}},
-	pages={${10:NN}--${11:NN}}
+	AUTHOR    = {${2:author}},
+	TITLE     = {${3:title}},
+	SUBTITLE  = {${4:subtitle}},
+	BOOKTITLE = {${5:book}},
+	EDITOR    = {${6:editor}},
+	YEAR      = {${7:YYYY}},
+	LOCATION  = {${8:somewhere}},
+	PUBLISHER = {${9:publisher}},
+	PAGES     = {${10:NN}--${11:NN}}
 }
 $0
 endsnippet

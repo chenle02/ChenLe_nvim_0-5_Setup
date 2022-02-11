@@ -23,7 +23,7 @@ def getShell():
 endglobal
 
 ###########################################################################
-#                            TextMate Snippets                            #
+#       TextMate Snippets       #
 ###########################################################################
 
 # {{{ snippet #! "#!/usr/bin/env (!env)" b
@@ -44,7 +44,7 @@ snippet temp "Tempfile" b
 ${1:TMPFILE}="$(mktemp -t ${3:--suffix=${4:.SUFFIX}} ${2:`!p
 snip.rv = re.sub(r'[^a-zA-Z]', '_', snip.fn) or "untitled"
 `}.XXXXXX)"
-${5:${6/(.+)/trap "/}${6:rm -f '$${1/.*\s//}'}${6/(.+)/" 0               # EXIT\n/}${7/(.+)/trap "/}${7:rm -f '$${1/.*\s//}'; exit 1}${7/(.+)/" 2       # INT\n/}${8/(.+)/trap "/}${8:rm -f '$${1/.*\s//}'; exit 1}${8/(.+)/" 1 15    # HUP TERM\n/}}
+${5:${6/(.+)/trap "/}${6:rm -f '$${1/.*\s//}'}${6/(.+)/" 0    # EXIT\n/}${7/(.+)/trap "/}${7:rm -f '$${1/.*\s//}'; exit 1}${7/(.+)/" 2  # INT\n/}${8/(.+)/trap "/}${8:rm -f '$${1/.*\s//}'; exit 1}${8/(.+)/" 1 15 # HUP TERM\n/}}
 
 endsnippet
 # }}}
@@ -105,21 +105,53 @@ done
 endsnippet
 # }}}
 # This is Le Chen's snippets
+
+#{{{ TestNum "Test if a variable is numeric" g
+snippet TestNum "Test if a variable is numeric" g
+re='^[0-9]+$'
+if ! [[ $yournumber =~ $re ]] ; then
+	echo "Not a number."
+else
+	echo "Is a number."
+fi
+endsnippet
+#}}}
+
+#{{{ TestFile "Test if file exists" g
+snippet TestFile "Test if file exists" g
+if [ -f "$File" ]; then
+	echo "$File exists."
+else
+	echo "$File does not exist."
+fi
+endsnippet
+#}}}
+#{{{ TestFiles "Test if certain files exist" g
+snippet TestFiles "Test if certain files exist" g
+files=$(ls *.pdf 2> /dev/null | wc -l)
+if [ "$files" != "0" ]
+then
+	echo "Exists"
+else
+	echo "None found."
+fi
+endsnippet
+#}}}
 # {{{ front "Front matters" g
 snippet front "Front matters" g
 #!/usr/bin/env bash
 # #!/bin/bash
 if [ $# -eq 0 ]
 then
-   echo ""
-   echo ""
-   echo "Usage: \$0 $1"
-   echo "Work under working directory."
-   echo "by Le CHEN, (chenle02@gmail.com)"
-   echo "`date`"
-   echo ""
-   echo ""
-   exit 1
+	echo ""
+	echo ""
+	echo "Usage: \$0 $1"
+	echo "Work under working directory."
+	echo "by Le CHEN, (chenle02@gmail.com)"
+	echo "`date`"
+	echo ""
+	echo ""
+	exit 1
 fi
 endsnippet
 # }}}
@@ -144,13 +176,14 @@ Le
 email-process tmp.txt
 # neomutt -F ~/.config/mutt/muttrc_gmail \
 neomutt \
-    -s "${Subject}" \
-    -b chenle02@gmail.com \
-    -- $To \
-    < tmp.txt
+	-s "${Subject}" \
+	-b chenle02@gmail.com \
+	-- $To \
+	< tmp.txt
 
-    # -a File_to_attach
-    # -c le.chen@emory.edu \
+	# -a File_to_attach \
+	# -c le.chen@emory.edu \
+	# -e "source test.mutt" \
 
 rm tmp.txt
 endsnippet
@@ -167,8 +200,8 @@ declare -a arr=(
 ## now loop through the above array
 for i in "${arr[@]}"
 do
-   echo "$i"
-   # or do whatever with individual element of the array
+	echo "$i"
+	# or do whatever with individual element of the array
 done
 endsnippet
 # }}}
@@ -202,9 +235,9 @@ endsnippet
 snippet LoopDir "Loop all subdirectory of a directory"
 for d in $(fd --type d ${0:/path/to/the/directory/}) 
 do
-  if [ -d "$d" ]; then
-    echo "$d"
-  fi
+	if [ -d "$d" ]; then
+		echo "$d"
+	fi
 done
 endsnippet
 #}}}
@@ -273,26 +306,26 @@ snippet score "Score script"
 #!/usr/bin/env bash
 if [ $# -eq 0 ]
 then
-   echo ""
-   echo "Usage: \$0 [dummy]"
-   echo ""
-   echo "    Show help information when there is no dummy argument."
-   echo "    Run the file when a dummy argument is given"
-   echo ""
-   echo "Steps: "
-   echo "
+	echo ""
+	echo "Usage: \$0 [dummy]"
+	echo ""
+	echo " Show help information when there is no dummy argument."
+	echo " Run the file when a dummy argument is given"
+	echo ""
+	echo "Steps: "
+	echo "
 1. Download the lastest score csv file from Canvas.
 2. Make the symbolic link to the latest csv file. The link is called last.csv.
 3. Using xsv, which has been commented out part below, to determine the fields.
 4. Edit eval.awk for the fields and rules.
 5. Edit this file to determine the output filename.
 6. Do not fortet to make a curve of the score whenever needed."
-   echo ""
-   echo "by Le CHEN, (chenle02@gmail.com)"
-   echo "`date`"
-   echo ""
-   echo ""
-   exit 1
+	echo ""
+	echo "by Le CHEN, (chenle02@gmail.com)"
+	echo "`date`"
+	echo ""
+	echo ""
+	exit 1
 fi
 
 # 1. Explore the csv file.
@@ -314,7 +347,7 @@ cp last.csv working.csv
 sed -i "$ d" working.csv
 
 # 5. Working now~!
-awk -f eval.awk working.csv | cut -d"," -f2- >  $Output
+awk -f eval.awk working.csv | cut -d"," -f2- > $Output
 
 # 6. Some post process after curving when necessary.
 # cp ./Math5870-100_2021Fall_LeChen_Before_Curve.csv ./Math5870-100_2021Fall_LeChen.csv

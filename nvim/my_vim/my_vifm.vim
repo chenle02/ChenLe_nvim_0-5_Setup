@@ -1,0 +1,1 @@
+nnoremap vm :Vifm<cr>

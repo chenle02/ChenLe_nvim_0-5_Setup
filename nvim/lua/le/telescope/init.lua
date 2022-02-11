@@ -136,7 +136,7 @@ require("telescope").load_extension("gh")
 require("telescope").load_extension("repo")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("bookmarks")
-require('telescope').load_extension('neoclip')
+-- require('telescope').load_extension('neoclip')
 require('telescope').load_extension('media_files')
 require('telescope').load_extension('zoxide')
 require("telescope").load_extension("frecency")
@@ -196,7 +196,12 @@ key_map(
 )
 --}}}
 --{{{ live_grep: ;r
-key_map("n", ";r", [[<Cmd>lua require'telescope.builtin'.live_grep()<CR>]], { noremap = true, silent = true })
+key_map(
+  "n",
+  ";r",
+  [[<Cmd>lua require('telescope.builtin').live_grep()<CR>]],
+  { noremap = true, silent = true }
+)
 --}}}
 --{{{ key_maps: ;k
 key_map(
@@ -543,7 +548,7 @@ function M.find_research_latex()
 end
 key_map("n", ".f", [[<Cmd>lua require'le.telescope'.find_research_latex()<CR>]], { noremap = true, silent = true })
 --}}}
---{{{ search_research_bibitem: .b, under the current directory
+--{{{ search_research_bibitem: .t, under the current directory
 function M.search_research_bibitem()
   require("telescope.builtin").grep_string {
     prompt_title = " Search bibitem",
@@ -553,7 +558,19 @@ function M.search_research_bibitem()
     search = "bibitem",
   }
 end
-key_map("n", ".b", ":lua require'le.telescope'.search_research_bibitem()<CR>", { noremap = true, silent = true })
+key_map("n", ".t", ":lua require'le.telescope'.search_research_bibitem()<CR>", { noremap = true, silent = true })
+--}}}
+--{{{ search_research_bibitem: .c, under the current directory
+-- function M.all_bibtex_items()
+--   require("telescope.builtin").tags {
+--     prompt_title = " Search tags",
+--     prompt_prefix = " ",
+--     results_title = "Searching for tags",
+--     path_display = { "smart" },
+--   }
+-- end
+-- key_map("n", ".c", ":lua require'le.telescope'.all_bibtex_items()<CR>", { noremap = true, silent = true })
+key_map("n", ".c", ":Tags<cr>", { noremap = true, silent = true })
 --}}}
 --{{{ browse_research_latex: .e, not working now.
 function M.browse_research_latex()
@@ -573,6 +590,7 @@ function M.find_mydotfiles()
     prompt_title = " my dotfiles Find",
     results_title = "Le's Config Files Results",
     path_display = { "smart" },
+    hidden = true,
     search_dirs = {
       -- "~/.oh-my-zsh/custom/",
       "~/Dropbox/mydotfiles/",

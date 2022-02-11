@@ -64,7 +64,7 @@ let g:pymode_lint_ignore = ["E501"]
 " https://medium.com/@Aenon/vim-swap-backup-undo-git-2bf353caa02f
 set backupdir=.backup/,~/.backup/,/tmp//
 set directory=.swp/,~/.swp/,/tmp//
-set undodir=.undo/,~/.undo/,/tmp//"
+set undodir=.undo/,~/.undo/,/tmp//
 " }}}
 "}}}
 "{{{ Automatically install missing plugins on startup
@@ -207,7 +207,9 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'itchyny/vim-gitbranch'                        "
     " The followings are color related
     Plug 'itchyny/lightline.vim'                        " The colored tool bars
-    Plug 'frazrepo/vim-rainbow'                         " Color related
+    " Plug 'frazrepo/vim-rainbow'                         " Color related
+    " Plug 'luochen1990/rainbow'
+    Plug 'junegunn/rainbow_parentheses.vim'
     Plug 'sjl/badwolf'                                  " Colorscheme
     Plug 'chrisbra/Colorizer'                           "
     Plug 'altercation/vim-colors-solarized'             " Colorscheme
@@ -248,27 +250,6 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'wlemuel/vim-tldr'
     Plug 'ncm2/ncm2'
     Plug 'roxma/nvim-yarp'
-      " For ncm2 + nvim-yarp"{{{
-      autocmd BufEnter * call ncm2#enable_for_buffer()
-      set completeopt=noinsert,menuone,noselect
-      " NOTE: you need to install completion sources to get completions. Check
-      " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-      Plug 'ncm2/ncm2-bufword'
-      Plug 'ncm2/ncm2-path'
-      augroup my_cm_setup
-      autocmd!
-      autocmd BufEnter * call ncm2#enable_for_buffer()
-      autocmd Filetype tex call ncm2#register_source({
-          \ 'name': 'vimtex',
-          \ 'priority': 8,
-          \ 'scope': ['tex'],
-          \ 'mark': 'tex',
-          \ 'word_pattern': '\w+',
-          \ 'complete_pattern': g:vimtex#re#ncm2,
-          \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-          \ })
-      augroup END
-      "}}}
     Plug 'andymass/vim-matchup'
     Plug 'jpalardy/vim-slime'
     Plug  'neomutt/neomutt.vim' 			" for Syntex hightlighting
@@ -311,7 +292,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'tommcdo/vim-exchange'
     Plug 'mechatroner/rainbow_csv'
     Plug 'romainl/vim-cool'
-    Plug 'jupyter-vim/jupyter-vim', { 'commit': 'a1faca2' }
+    " Plug 'jupyter-vim/jupyter-vim', { 'commit': 'a1faca2' }
     Plug 'tpope/vim-speeddating'
     Plug 'petRUShka/vim-sage'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -331,7 +312,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'mhartington/formatter.nvim'
     Plug 'nvim-telescope/telescope-frecency.nvim'
     Plug 'tami5/sqlite.lua'
-    Plug 'AckslD/nvim-neoclip.lua'
+    " Plug 'AckslD/nvim-neoclip.lua'
     Plug 'cljoly/telescope-repo.nvim'
     Plug 'jvgrootveld/telescope-zoxide'
     " Plug 'fannheyward/telescope-coc.nvim'
@@ -341,7 +322,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     " Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
     Plug 'kdheepak/lazygit.nvim'
     Plug 'sindrets/diffview.nvim'
-    Plug 'lewis6991/gitsigns.nvim'
+    " Plug 'lewis6991/gitsigns.nvim'
     " Plug 'TimUntersberger/neogit'
     Plug 'numToStr/Comment.nvim'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch' : '0.5-compat'}
@@ -371,9 +352,13 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'projekt0n/github-nvim-theme'
     Plug 'ellisonleao/glow.nvim'
     Plug 'ElPiloto/telescope-vimwiki.nvim'
+    Plug 'engeljh/vim-latexfmt'
+    Plug 'akinsho/toggleterm.nvim'
     " Plug 'Th3Whit3Wolf/one-nvim'
     " Plug 'to268/telescope-doc.nvim'
-    " Plug 'nvim-telescope/telescope-hop.nvim'
+    Plug 'nvim-telescope/telescope-hop.nvim'
+    Plug 'chenle02/telescope-bibtex.nvim'
+    " Plug 'daeyun/vim-matlab'
     " {{{ Some removed.
     " Plug 'thalesmello/webcomplete.vim'
     " " Set up the browser, default is google Chrome, I am setting it to qutebrowser{{{
@@ -430,8 +415,10 @@ call vundle#begin()
     Plugin 'ntpeters/vim-better-whitespace'
     " Plugin 'wesQ3/vim-windowswap'
     Plugin 'othree/yajs.vim'
+    Plugin 'vifm/vifm.vim'
     " Plugin 'pangloss/vim-javascript'
     " Plugin 'grvcoelho/vim-javascript-snippets'
+    Plugin 'git@github.com:papis/papis-vim.git'
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -565,6 +552,7 @@ source ~/.config/nvim/my_vim/my_ctrlsf.vim
 source ~/.config/nvim/my_vim/my_vim-wordy.vim
 source ~/.config/nvim/my_vim/my_tabline.vim
 " source ~/.config/nvim/my_vim/my_ale.vim
+source ~/.config/nvim/my_vim/my_vifm.vim
 source ~/.config/nvim/my_vim/my_vim-abook.vim
 source ~/.config/nvim/my_vim/my_goyo.vim
 source ~/.config/nvim/my_vim/my_vim-lexical.vim
@@ -602,19 +590,23 @@ source ~/.config/nvim/my_vim/my_vim-windowsap.vim
 source ~/.config/nvim/my_vim/my_yajs.vim
 source ~/.config/nvim/my_vim/my_vim-matchup.vim
 source ~/.config/nvim/my_vim/my_fern.vim
+source ~/.config/nvim/my_vim/my_asyncrun.vim
 " source ~/.config/nvim/my_vim/org.vim
 source ~/.config/nvim/my_vim/spelunker_source.vim
+source ~/.config/nvim/my_vim/my_ncm2.vim
 " Run the following command to list all lua files
+" source ~/.config/nvim/my_vim/my_vim-rainbow.vim
+" source ~/.config/nvim/my_vim/my_rainbow.vim
 " :r !ls nvim_lua
 source ~/.config/nvim/lua/le/telescope/init.lua
 source ~/.config/nvim/lua/plug-comment.lua
 source ~/.config/nvim/lua/plug-compe.lua
 source ~/.config/nvim/lua/plug-diffview.lua
-source ~/.config/nvim/lua/plug-gitsigns.lua
+" source ~/.config/nvim/lua/plug-gitsigns.lua
 source ~/.config/nvim/lua/plug-iswap.lua
 source ~/.config/nvim/lua/plug-lsp_installer.lua
 source ~/.config/nvim/lua/plug-lspconfig.lua
-source ~/.config/nvim/lua/plug-neoclip.lua
+" source ~/.config/nvim/lua/plug-neoclip.lua
 " source ~/.config/nvim/lua/plug-neogit.lua
 source ~/.config/nvim/lua/plug-nvim-treesitter.lua
 source ~/.config/nvim/lua/plug-nvim_tree.lua
@@ -629,8 +621,11 @@ source ~/.config/nvim/lua/plug-impatient.lua
 source ~/.config/nvim/lua/plug-bufferline-nvim.lua
 source ~/.config/nvim/lua/plug-notify.lua
 source ~/.config/nvim/lua/plug-glow.lua
+source ~/.config/nvim/lua/plug-toggleterm.lua
+source ~/.config/nvim/lua/plug-nvim-ts-rainbow.lua
 " source ~/.config/nvim/lua/plug-sqlite.lua
 " source ~/.config/nvim/lua/plug-telescop-doc.lua
+source ~/.config/nvim/lua/plug-telescope-bibtex.lua
 "}}}
 "{{{ some autocmd group for snippets
 augroup snippets

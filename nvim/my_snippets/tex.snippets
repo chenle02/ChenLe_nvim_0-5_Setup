@@ -254,7 +254,7 @@ endsnippet
 snippet ScreenShot "Comment on screen shot figure"
 \begin{center}
 	\begin{tikzpicture}[scale=1, transform shape]
-		\node (fig) at (0,0) {\includegraphics[scale=0.25]{${1:Filename.jpg}}};
+		\node (fig) at (0,0) {\includegraphics[scale=0.25]{${1:Filename.jpg} }};
 		\pause
 		\draw[red] (-3,-0.33) rectangle ++(6,+3) node [right] {Group $X$};
 		\pause
@@ -302,6 +302,11 @@ endsnippet
 #{{{ gentbl#x#, "begin{tabular}...\end{tabular}" where # is a number
 pre_expand "add_row(snip)"
 snippet "tr(\d+)" "Add table row of dimension ..." r
+endsnippet
+#}}}
+#{{{ roman "\pagenumbering{roman}" b
+snippet roman "pagenumbering{roman}" b
+\pagenumbering{roman}
 endsnippet
 #}}}
 
@@ -496,7 +501,7 @@ endsnippet
 context "math()"
 #{{{ sum "sum" w
 snippet sum "sum" w
-\sum_{n=${1:1}}^{${2:\infty}} ${3:a_n z^n}
+\sum_{k=${1:0}}^{${2:\infty}} ${3:a_k z^k}
 endsnippet
 #}}}
 context "math()"
@@ -659,6 +664,12 @@ context "math()"
 #{{{ mbb "mathbf" iA
 snippet mbb "mathbf" iA
 \mathbb{$1}$0
+endsnippet
+#}}}
+context "math()"
+#{{{ mscr "mathscr" iA
+snippet mscr "mathscr" iA
+\mathscr{$1}$0
 endsnippet
 #}}}
 context "math()"
@@ -1310,6 +1321,11 @@ snippet mindmap "Mind map template"
 endsnippet
 # }}}
 #}}}
+#{{{ includepdf "includepdf pages" b
+snippet includepdf "includepdf pages" b
+\includepdf[pages=-]{./${0:Filename}}
+endsnippet
+#}}}
 
 # The following are for beamer slides
 #{{{ bfrm -- One beamer slide for course
@@ -1683,11 +1699,84 @@ snippet	Review "Reviewing article" b
 \usepackage{amsmath,amssymb,amsthm,mathrsfs}
 \usepackage{luacode}
 \usepackage{xcolor}
-\newcommand {\R}{\mathbb{R}}
-\newcommand{\Norm}[1]{\left|\left|  #1   \right|\right|}
-\newcommand {\E}{\mathbb{E}}
-\newcommand{\lp}[2]{{\it Line #1, page #2:~}}
+\usepackage{babel}
+\usepackage{url}
+\usepackage[colorlinks=true,
+            linkcolor=blue,
+            filecolor=magenta,      
+            urlcolor=cyan,
+            citecolor=magenta,
+            pdftitle={Reviewing report},
+            pdfpagemode=FullScreen,
+           ]{hyperref}
+\usepackage[strict=true,style=english]{csquotes}
 \setlength{\parskip}{0.5cm plus4mm minus3mm}
+% \usepackage[style=alphabetic, %authoryear
+%             bibstyle=authoryear,
+%             citestyle=authoryear,
+%             natbib=true,
+%             hyperref=true,
+%             backref=true,
+%             abbreviate=true]{biblatex}
+\usepackage[backend=biber,
+						style=alphabetic,
+						natbib=true,
+            abbreviate=true]{biblatex}
+% \usepackage{citeall}
+% \usepackage[notref,notcite]{showkeys}
+% \newbibmacro*{bbx:parunit}{%
+%   \ifbibliography
+%     {\setunit{\bibpagerefpunct}\newblock
+%      \usebibmacro{pageref}%
+%      \clearlist{pageref}%
+%      \setunit{\adddot\par\nobreak}}
+%     {}}
+%
+% \renewbibmacro*{doi+eprint+url}{%
+%   \usebibmacro{bbx:parunit}% Added
+%   \iftoggle{bbx:doi}
+%     {\printfield{doi}}
+%     {}%
+%   \iftoggle{bbx:eprint}
+%     {\usebibmacro{eprint}}
+%     {}%
+%   \iftoggle{bbx:url}
+%     {\usebibmacro{url+urldate}}
+%     {}}
+%
+% \renewbibmacro*{eprint}{%
+%   \usebibmacro{bbx:parunit}% Added
+%   \iffieldundef{eprinttype}
+%     {\printfield{eprint}}
+%     {\printfield[eprint:\strfield{eprinttype}]{eprint} }}
+%
+% \renewbibmacro*{url+urldate}{%
+%   \usebibmacro{bbx:parunit}% Added
+%   \printfield{url}%
+%   \iffieldundef{urlyear}
+%     {}
+%     {\setunit*{\addspace}%
+%      \printtext[urldate]{\printurldate} }}
+%
+\AtEveryBibitem{% Clean up the bibtex rather than editing it
+ \clearfield{doi}
+ \clearfield{url}
+ \clearfield{issn}
+ \clearlist{location}
+ \clearfield{month}
+ \clearfield{series}
+ 
+ \ifentrytype{book}{}{% Remove publisher and editor except for books
+  \clearlist{publisher}
+  \clearname{editor}
+ }
+}
+\addbibresource{All.bib}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Norm}[1]{\left|\left|  #1   \right|\right|}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\lp}[2]{{\it Line #1, page #2:~}}
 
 \begin{luacode}
 function file_exists(name)
@@ -1699,20 +1788,23 @@ lfs = require("lfs")
 if file_exists("notes.tex")==false then
 	os.execute("touch notes.tex")
 end
+if file_exists("All.bib")==false then
+	os.execute("ln -s ~/Dropbox/workspace/svn/refdb/All.bib All.bib")
+end
 if file_exists("table") then
 	Data = dofile("table")
 else
 	Data = {
-		Author    = 'Friends',
-		Journal   = 'Random Journal',
-		Editor    = 'Unknown',
-		From      = ' ',
-		Deadline  = ' ',
+		Author    = 'Lyu Yangyang and Li Heyu',
+		Journal   = 'Acta Mathematica Scientia',
+		Editor    = 'Hu Yaozhong',
+		From      = '10/11/2021',
+		Deadline  = '01/10/2022',
 		Completed = ' ',
-		Title     = 'my tilte',
+		Title     = 'Almost surely time-space intermittency for the parabolic Anderson model with log-correlated Gaussian field',
 		Decision  = '---',
 		Report    = './Review.pdf',
-		Paper     = './....pdf',
+		Paper     = './AMSC-D-21-00554.pdf',
 		Path	  = lfs.currentdir()
 	}
 end
@@ -1737,7 +1829,9 @@ by
 % % \vskip .3in }}}
 
 % ---------------------------
-In this paper, $0
+In this paper,  \cite{MR3769807} ${0:Start typing here}
+
+\printbibliography[title={References}]
 
 % --------------------------- {{{
 \begin{luacode}
@@ -1841,6 +1935,376 @@ Assistant professor\\\\
 \end{document}% }}}
 endsnippet
 #}}}
+#{{{ Discussion
+snippet Discussion "Discussions" b
+\documentclass[12pt]{article} %{{{
+
+% -------------------------------------------------
+%
+% | |    ___   / ___| |__   ___ _ __
+% | |   / _ \ | |   | '_ \ / _ \ '_ \
+% | |__|  __/ | |___| | | |  __/ | | |
+% |_____\___|  \____|_| |_|\___|_| |_|
+%
+%  Document created on `date`
+%
+% -------------------------------------------------
+% Load Packages here
+% -------------------------------------------------
+% {{{
+\usepackage{graphicx,url,subfig}
+% \usepackage[final]{pdfpages}
+\RequirePackage{amsthm,amsmath,amssymb,amscd,mathrsfs}
+% \usepackage{luacode}
+\usepackage{enumerate,xcolor}
+\usepackage[text={6.2in,8.6in},centering]{geometry}
+\usepackage{filecontents}
+\usepackage{xcolor}
+\usepackage{babel}
+\usepackage{url}
+\usepackage[colorlinks=true,
+            linkcolor=blue,
+            filecolor=magenta,      
+            urlcolor=cyan,
+            citecolor=magenta,
+            pdftitle={Comments},
+            pdfpagemode=FullScreen,
+           ]{hyperref}
+% }}}
+% -------------------------------------------------
+% Bibtex related
+% -------------------------------------------------
+% {{{
+\usepackage[strict=true,style=english]{csquotes}
+% \usepackage[style=alphabetic, %authoryear bibstyle=authoryear,
+%             citestyle=authoryear,
+%             natbib=true,
+%             hyperref=true,
+%             backref=true,
+%             abbreviate=true]{biblatex}
+\usepackage[backend=biber,
+						style=alphabetic,
+						natbib=true,
+            maxbibnames=99,
+            sorting=ynt,
+            abbreviate=true]{biblatex}
+% Options for sorting:
+% nty—sorts entries by name, title, year;
+% nyt—sorts entries by name, year, title;
+% nyvt—sorts entries by name, year, volume, title;
+% anyt—sorts entries by alphabetic label, name, year, title;
+% anyvt—sorts entries by alphabetic label, name, year, volume, title;
+% ynt—sorts entries by year, name, title;
+% ydnt—sorts entries by year (descending order), name, title;
+% none—no sorting. Entries appear in the order they appear in the text.
+
+\AtEveryBibitem{% Clean up the bibtex rather than editing it
+ \clearfield{doi}
+ \clearfield{url}
+ \clearfield{issn}
+ \clearlist{location}
+ \clearfield{month}
+ \clearfield{series}
+ 
+ \ifentrytype{book}{}{% Remove publisher and editor except for books
+  \clearlist{publisher}
+  \clearname{editor}
+ }
+}
+% \addbibresource{`!p snip.rv = snip.basename`_biber.bib}
+% \addbibresource{All.bib}
+\addbibresource{~/Dropbox/workspace/svn/refdb/All.bib}
+% }}}
+% -------------------------------------------------
+% check references
+% -------------------------------------------------
+% {{{
+% \usepackage{refcheck}
+% \usepackage[notref,notcite]{showkeys}
+% \usepackage[notcite]{showkeys}
+% \usepackage{showkeys}
+% }}}
+% -------------------------------------------------
+% Environments here
+% -------------------------------------------------
+% {{{
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{example}[theorem]{Example}
+% }}}
+% -------------------------------------------------
+%  Define short hand symbols.
+% -------------------------------------------------
+% {{{
+\newcommand{\R}{ {\mathbb{R} }}
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\HH}{\mathcal{H}}
+\renewcommand{\P}{\mathrm{P}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+% \renewcommand{\d }{\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\Var}{\text{\rm Var}}
+\newcommand{\ud}{\text{\rm d}}
+\newcommand{\lip}{\text{\rm Lip}}
+\newcommand{\lup}{\text{\rm L}}
+\newcommand{\logapp}{\stackrel{(\log)}{\asymp}}
+\newcommand{\Norm}[1]{\left|\left|  #1   \right|\right|}
+\DeclareMathOperator{\Cov}{\text{\rm Cov}}
+% }}}
+% }}}
+% -------------------------------------------------
+% Title, authors and date go here.
+% -------------------------------------------------
+% {{{
+\title{Some comments}
+\author{Le Chen}
+\date{\today}
+\begin{document}
+\maketitle
+\noindent
+
+Dear all,
+\bigskip
+% }}}
+% -------------------------------------------------
+% Document begins here
+% -------------------------------------------------
+
+${0:Start here.}
+
+\cite{dalang.frangos:98:stochastic}
+
+% -------------------------------------------------
+% Signature
+% -------------------------------------------------
+\bigskip
+\noindent
+Best regards,
+
+\noindent
+Le
+% -------------------------------------------------
+% References go here.
+% -------------------------------------------------
+% --------------------------- {{{
+\begingroup
+\global\let\savedifeof=\ifeof
+\def\ifeof#1{\global\let\ifeof=\savedifeof\iftrue}%
+\begin{filecontents}{`!p snip.rv = snip.basename`.bib}
+@Article{	  dalang.frangos:98:stochastic,
+  author	= {Dalang, Robert C. and Frangos, N. E.},
+  title		= {The stochastic wave equation in two spatial dimensions},
+  journal	= {Ann. Probab.},
+  fjournal	= {The Annals of Probability},
+  volume	= {26},
+  year		= {1998},
+  number	= {1},
+  pages		= {187--212},
+  issn		= {0091-1798},
+  mrclass	= {60H15},
+  mrnumber	= {1617046},
+  mrreviewer	= {R\'{e}mi L\'{e}andre},
+  doi		= {10.1214/aop/1022855416},
+  url		= {https://doi.org/10.1214/aop/1022855416}
+}
+\end{filecontents}
+\printbibliography[title={References}]
+\end{document}
+% }}}
+
+endsnippet
+#}}}
+#{{{ PapisNotes
+snippet PapisNotes "Papis Notes" b
+\documentclass[12pt]{article} %{{{
+\usepackage[text={6.2in,8.6in},centering]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{luacode}
+\usepackage{pdfpages}
+\usepackage{xcolor}
+\usepackage{babel}
+\usepackage{url}
+\usepackage{comment}
+\excludecomment{codes}
+\usepackage[colorlinks=true,
+            linkcolor=blue,
+            filecolor=magenta,
+            urlcolor=cyan,
+            citecolor=magenta,
+            pdftitle={Reviewing report},
+            pdfpagemode=FullScreen,
+           ]{hyperref}
+\usepackage[strict=true,style=english]{csquotes}
+\setlength{\parskip}{0.5cm plus4mm minus3mm}
+% \usepackage[style=alphabetic, %authoryear
+%             bibstyle=authoryear,
+%             citestyle=authoryear,
+%             natbib=true,
+%             hyperref=true,
+%             backref=true,
+%             abbreviate=true]{biblatex}
+\usepackage[backend=biber,
+						style=alphabetic,
+						natbib=true,
+            abbreviate=true]{biblatex}
+% \usepackage{citeall}
+% \usepackage[notref,notcite]{showkeys}
+% \newbibmacro*{bbx:parunit}{%
+%   \ifbibliography
+%     {\setunit{\bibpagerefpunct}\newblock
+%      \usebibmacro{pageref}%
+%      \clearlist{pageref}%
+%      \setunit{\adddot\par\nobreak}}
+%     {}}
+%
+% \renewbibmacro*{doi+eprint+url}{%
+%   \usebibmacro{bbx:parunit}% Added
+%   \iftoggle{bbx:doi}
+%     {\printfield{doi}}
+%     {}%
+%   \iftoggle{bbx:eprint}
+%     {\usebibmacro{eprint}}
+%     {}%
+%   \iftoggle{bbx:url}
+%     {\usebibmacro{url+urldate}}
+%     {}}
+%
+% \renewbibmacro*{eprint}{%
+%   \usebibmacro{bbx:parunit}% Added
+%   \iffieldundef{eprinttype}
+%     {\printfield{eprint}}
+%     {\printfield[eprint:\strfield{eprinttype}]{eprint} }}
+%
+% \renewbibmacro*{url+urldate}{%
+%   \usebibmacro{bbx:parunit}% Added
+%   \printfield{url}%
+%   \iffieldundef{urlyear}
+%     {}
+%     {\setunit*{\addspace}%
+%      \printtext[urldate]{\printurldate} }}
+%
+% \AtEveryBibitem{% Clean up the bibtex rather than editing it
+%  \clearfield{doi}
+%  \clearfield{url}
+%  \clearfield{issn}
+%  \clearlist{location}
+%  \clearfield{month}
+%  \clearfield{series}
+% 
+%  \ifentrytype{book}{}{% Remove publisher and editor except for books
+%   \clearlist{publisher}
+%   \clearname{editor}
+%  }
+% }
+\addbibresource{All.bib}
+
+% -------------------------------------------------
+% check references
+% -------------------------------------------------
+% \usepackage{refcheck}
+\usepackage[notref,notcite]{showkeys}
+% \usepackage[notcite]{showkeys}
+% \usepackage{showkeys}
+% \usepackage{tocloft}
+% -------------------------------------------------
+% Environment
+% -------------------------------------------------
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{condition}[theorem]{Condition}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ud}{\mathtt{d}}
+\newcommand{\Norm}[1]{\left|\left|  #1   \right|\right|}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\lp}[2]{{\it Line #1, page #2:~}}
+
+\begin{luacode}
+function file_exists(name)
+   local f=io.open(name,"r")
+   if f~=nil then io.close(f) return true else return false end
+end
+
+lfs = require("lfs")
+if file_exists("notes.tex")==false then
+	os.execute("touch notes.tex")
+end
+if file_exists("All.bib")==false then
+	 os.execute("ln -s ~/Dropbox/workspace/svn/refdb/All.bib All.bib")
+end
+if file_exists("table")==false  then
+   os.execute("/home/lechen/Dropbox/Research-References/scripts/yaml2table.lua")
+end
+Data = dofile("table")
+\end{luacode}
+
+% define \thispaper for citation.
+\luaexec{tex.sprint('\\\\def\\\\thispaper{\\\\cite{' .. Data[1]['CiteKey'] .. '}\\\\:}')}
+
+\begin{document}
+% \noindent
+
+\begin{center}{
+Le Chen's notes on:\\\\[1em]
+\begin{minipage}{0.8\textwidth}
+\begin{center}
+   \Large
+\luaexec{tex.sprint(Data[1]['title'])}
+\luaexec{tex.sprint('\\\\cite{' .. Data[1]['CiteKey'] .. '}')}
+\end{center}
+\end{minipage}
+\\\\[0.5em]
+by
+\\\\[0.5em]
+\luaexec{tex.sprint(Data[1]['author'])}
+}
+
+\bigskip
+\today
+\small
+
+Cite as
+
+\luaexec{tex.sprint(Data[1]['CiteKey'])}
+\end{center}
+% % \vskip .3in }}}
+
+% ---------------------------
+
+
+In this paper \thispaper,  we have
+
+
+% --------------------------- {{{
+\printbibliography[title={References}]
+\end{document}
+% }}}
+
+endsnippet
+#}}}
 
 # The following are bib
 #{{{ bib
@@ -1873,6 +2337,9 @@ snippet luap "luaexec tex.sprint"
 \luaexec{tex.sprint($0)}
 endsnippet
 #}}}
+
+
+# Some other email related ones:
 # Here is my zoom link.{{{
 snippet zoomAU "My Zoom Link for Emory"
 
@@ -1954,7 +2421,7 @@ snippet FWTW "From word to word"
 \`\`$1" $\to$ \`\`$1"
 endsnippet
 #}}}
-#{{{ bibitem
+#{{{ TalkU "Upload Talk to FPDs" b
 snippet TalkU "Upload Talk to FPDs" b
 Dear $0,
 
@@ -1963,7 +2430,51 @@ Thank you very much. Your exam files have been well received. I will let you kno
 Best regards,
 
 Le
+endsnippet
+#}}}
 
+# Mathematica related and codes related
+#{{{ ToExp "ToExpression[..., TeXForm, HoldForm]"
+snippet ToExp "ToExpression[..., TeXForm, HoldForm]"
+% make sure all \ be replaced by \\\\
+ToExpression["${0:LaTexExpression}", TeXForm, HoldForm]
+endsnippet
+#}}}
+#{{{ Codes "Wrting codes to latex" b
+snippet Codes "Wrting codes to latex" b
+% Make sure to have the following two lines in the beginning
+% Make sure no spaces are placed in front of environment.
+% \usepackage{comment}
+% \excludecomment{codes}
+\begin{codes}% {{{ Mathematica
+
+<<JavaGraphics`
+ToExpression["${0:LaTexExpression}", TeXForm, HoldForm]
+
+\end{codes}
+% }}}
+endsnippet
+#}}}
+
+# experiments
+#{{{ foo "get file basename"
+snippet foo "get file basename"
+`!p snip.rv = snip.basename`
+endsnippet
+#}}}
+#{{{ stet4  "Run a system command"
+snippet stet4
+`#!/usr/bin/env bash
+ln -s /home/lechen/Dropbox/workspace/svn/refdb/All.bbl All.bbl
+echo "Chen Le Test"
+echo "$(pwd)"
+`
+
+Something else 
+
+`
+!p snip.rv = snip.path
+`
 endsnippet
 #}}}
 # vim:ft=snippets:
