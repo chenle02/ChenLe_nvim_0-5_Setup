@@ -47,6 +47,25 @@ function custom_actions.multi_selection_open(prompt_bufnr)
   custom_actions._multiopen(prompt_bufnr, "edit")
 end
 --}}}
+--{{{ Load extensions:
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('fzy_native')
+-- require('telescope').load_extension('coc')
+require("telescope").load_extension("gh")
+require("telescope").load_extension("repo")
+require("telescope").load_extension("file_browser")
+require("telescope").load_extension("bookmarks")
+-- require('telescope').load_extension('neoclip')
+require('telescope').load_extension('media_files')
+require('telescope').load_extension('zoxide')
+require("telescope").load_extension("frecency")
+require('telescope').load_extension('vw')
+require('telescope').load_extension('buffer_lines')
+-- require('telescope').load_extension('ultisnips')
+-- require('telescope').extensions.notify.notify(<opts>)
+--}}}
 --{{{ Setup for telescope:
 require('telescope').setup {
   defaults = {
@@ -110,7 +129,7 @@ require('telescope').setup {
       filetypes = {"png", "webp", "jpg", "jpeg","pdf", "djvu"},
       -- find_cmd = "rg" -- find command (defaults to `fd`)
     },
-  frecency = {
+    frecency = {
       db_root = "/home/lechen/.local/share/nvim/",
       show_scores = false,
       show_unindexed = true,
@@ -125,23 +144,6 @@ require('telescope').setup {
     },
   },
 }
---}}}
---{{{ Load extensions:
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
-require('telescope').load_extension('fzf')
-require('telescope').load_extension('fzy_native')
--- require('telescope').load_extension('coc')
-require("telescope").load_extension("gh")
-require("telescope").load_extension("repo")
-require("telescope").load_extension("file_browser")
-require("telescope").load_extension("bookmarks")
--- require('telescope').load_extension('neoclip')
-require('telescope').load_extension('media_files')
-require('telescope').load_extension('zoxide')
-require("telescope").load_extension("frecency")
-require('telescope').load_extension('vw')
--- require('telescope').extensions.notify.notify(<opts>)
 --}}}
 -- Key bindings
 --{{{ ;g, //, \[: my old mappings in vim

@@ -11,7 +11,7 @@ function! s:gitUntracked()
   let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
   return map(files, "{'line': v:val, 'path': v:val}")
 endfunction
-let g:startify_session_dir = '~/.config/nvim/sessions'
+let g:startify_session_dir = '~/Dropbox/mydotfiles/vim-sessions/'
 let g:startify_lists = [
       \ { 'type': 'files',     'header': ['   MRU']            },
       \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },

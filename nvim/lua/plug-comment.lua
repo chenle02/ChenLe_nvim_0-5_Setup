@@ -66,3 +66,7 @@ require('Comment').setup {
   ---@type fun(ctx: Ctx)
   post_hook = nil,
 }
+
+local ft = require('Comment.ft')
+ft.set('wls','(* %s *)')
+

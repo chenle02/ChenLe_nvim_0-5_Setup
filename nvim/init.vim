@@ -23,6 +23,11 @@ set splitright
 set autochdir
 set timeoutlen=800
 set backspace=0
+" set termguicolors
+
+" Tab related
+set tabstop=2
+set expandtab
 
 " --- backup and swap files ---
 " I save all the time, those are annoying and unnecessary...
@@ -183,7 +188,8 @@ inoremap <C-d> <end>
 " Open :UltiSnipsEdit
 nnoremap <leader>ee :UltiSnipsEdit<CR>
 
-nnoremap gf <c-w>v :let mycurf=expand("<cfile>")<cr> :execute("e ".mycurf)<cr><c-w>p
+map gf :e <cfile><CR>
+" nnoremap gf <c-w>v :let mycurf=expand("<cfile>")<cr> :execute("e ".mycurf)<cr><c-w>p
 " nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
 "}}}
 
@@ -207,9 +213,9 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'itchyny/vim-gitbranch'                        "
     " The followings are color related
     Plug 'itchyny/lightline.vim'                        " The colored tool bars
-    " Plug 'frazrepo/vim-rainbow'                         " Color related
+    Plug 'frazrepo/vim-rainbow'                         " Color related
     " Plug 'luochen1990/rainbow'
-    Plug 'junegunn/rainbow_parentheses.vim'
+    " Plug 'junegunn/rainbow_parentheses.vim'
     Plug 'sjl/badwolf'                                  " Colorscheme
     Plug 'chrisbra/Colorizer'                           "
     Plug 'altercation/vim-colors-solarized'             " Colorscheme
@@ -241,6 +247,9 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } "
     Plug 'junegunn/fzf.vim'                             "
     Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRemotePlugins' }
+    Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+    " optional for icon support
+    Plug 'kyazdani42/nvim-web-devicons'
     Plug 'junegunn/goyo.vim'                             "
     Plug 'junegunn/limelight.vim'
     Plug 'justinmk/vim-dirvish'                         "
@@ -257,6 +266,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     " Plug 'jceb/vim-orgmode'		" This is for Emacs OrgMod
     Plug 'vim-scripts/utl.vim'
     Plug 'chrisbra/NrrwRgn'		" This is for narrow region feature from Emacs
+    Plug 'chrisbra/csv.vim'		" This is for CSV file
     Plug 'AndrewRadev/splitjoin.vim'	" split joint
     Plug 'voldikss/vim-floaterm'
     " Plug 'terryma/vim-multiple-cursors'
@@ -275,6 +285,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'dcbaker/vim-abook'
     Plug 'szw/vim-dict'
     " Plug 'puremourning/vimspector'
+    Plug 'mfussenegger/nvim-dap'
     Plug 'szw/vim-maximizer'
     Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
     Plug 'reedes/vim-wordy'
@@ -283,7 +294,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'prettier/vim-prettier', {'do': 'yarn install','for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']}
     Plug 'sjl/gundo.vim'
     Plug 'wellle/targets.vim'
-    Plug 'sheerun/vim-polyglot'
+    " Plug 'sheerun/vim-polyglot'
     Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
     Plug 'tpope/vim-abolish'
     Plug 'skywind3000/asyncrun.vim'
@@ -322,7 +333,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     " Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
     Plug 'kdheepak/lazygit.nvim'
     Plug 'sindrets/diffview.nvim'
-    " Plug 'lewis6991/gitsigns.nvim'
+    Plug 'lewis6991/gitsigns.nvim'
     " Plug 'TimUntersberger/neogit'
     Plug 'numToStr/Comment.nvim'
     Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch' : '0.5-compat'}
@@ -332,7 +343,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     " Plug 'blackCauldron7/surround.nvim'
     Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
     Plug 'kyazdani42/nvim-web-devicons' " for file icons
-    Plug 'kyazdani42/nvim-tree.lua'
+    " Plug 'kyazdani42/nvim-tree.lua'
     Plug 'hwayne/vim-pivot' " Swap text objects, this is an old one vim plugin
     Plug 'tommcdo/vim-exchange'
     Plug 'christianchiarulli/nvcode-color-schemes.vim'
@@ -358,6 +369,11 @@ silent! if plug#begin('~/.config/nvim/plugged')
     " Plug 'to268/telescope-doc.nvim'
     Plug 'nvim-telescope/telescope-hop.nvim'
     Plug 'chenle02/telescope-bibtex.nvim'
+    Plug 'chenle02/telescope-buffer-lines.nvim'
+    Plug 'matze/vim-tex-fold'
+    Plug 'github/copilot.vim'
+    Plug 'machakann/vim-swap'
+    Plug 'liuchengxu/vista.vim'
     " Plug 'daeyun/vim-matlab'
     " {{{ Some removed.
     " Plug 'thalesmello/webcomplete.vim'
@@ -551,6 +567,7 @@ source ~/.config/nvim/my_vim/LatexProject.vim
 source ~/.config/nvim/my_vim/my_ctrlsf.vim
 source ~/.config/nvim/my_vim/my_vim-wordy.vim
 source ~/.config/nvim/my_vim/my_tabline.vim
+source ~/.config/nvim/my_vim/my_vim-tex-fold.vim
 " source ~/.config/nvim/my_vim/my_ale.vim
 source ~/.config/nvim/my_vim/my_vifm.vim
 source ~/.config/nvim/my_vim/my_vim-abook.vim
@@ -601,15 +618,15 @@ source ~/.config/nvim/my_vim/my_ncm2.vim
 source ~/.config/nvim/lua/le/telescope/init.lua
 source ~/.config/nvim/lua/plug-comment.lua
 source ~/.config/nvim/lua/plug-compe.lua
-source ~/.config/nvim/lua/plug-diffview.lua
-" source ~/.config/nvim/lua/plug-gitsigns.lua
+source ~/.config/nvim/lua/plug-diffview2.lua
+source ~/.config/nvim/lua/plug-gitsigns.lua
 source ~/.config/nvim/lua/plug-iswap.lua
 source ~/.config/nvim/lua/plug-lsp_installer.lua
 source ~/.config/nvim/lua/plug-lspconfig.lua
 " source ~/.config/nvim/lua/plug-neoclip.lua
 " source ~/.config/nvim/lua/plug-neogit.lua
-source ~/.config/nvim/lua/plug-nvim-treesitter.lua
-source ~/.config/nvim/lua/plug-nvim_tree.lua
+source ~/.config/nvim/lua/plug-nvim-treesitter2.lua
+" source ~/.config/nvim/lua/plug-nvim_tree.lua
 source ~/.config/nvim/lua/plug-lsp_installer.lua
 source ~/.config/nvim/lua/plug-octo.lua
 " source ~/.config/nvim/lua/plug-surround.lua
@@ -622,7 +639,7 @@ source ~/.config/nvim/lua/plug-bufferline-nvim.lua
 source ~/.config/nvim/lua/plug-notify.lua
 source ~/.config/nvim/lua/plug-glow.lua
 source ~/.config/nvim/lua/plug-toggleterm.lua
-source ~/.config/nvim/lua/plug-nvim-ts-rainbow.lua
+" source ~/.config/nvim/lua/plug-nvim-ts-rainbow.lua
 " source ~/.config/nvim/lua/plug-sqlite.lua
 " source ~/.config/nvim/lua/plug-telescop-doc.lua
 source ~/.config/nvim/lua/plug-telescope-bibtex.lua
@@ -641,6 +658,10 @@ augroup END
 " https://devel.tech/snippets/n/vIIMz8vZ/load-vim-source-files-only-if-they-exist
 function! SourceIfExists(file)
   if filereadable(expand(a:file))
+    " if input("Coffee or beer? ") == "beer"
+    "   echo "Cheers!"
+    " endif
+    echom a:file . " is about to be sourced."
     exe 'source' a:file
   endif
 endfunction
@@ -661,8 +682,8 @@ set background=dark
 " colorscheme nvcode
 " colorscheme highlite
 " colorscheme iceberg
-colorscheme seoul256
-" colorscheme everforest
+" colorscheme seoul256
+colorscheme everforest
 " let g:everforest_background = 'hard'
 " let g:airline_theme = 'everforest'
 " colorscheme OceanicNext
@@ -673,6 +694,7 @@ colorscheme seoul256
 " hi Normal guibg=NONE ctermbg=NONE
 syntax enable
 " set termguicolors
+" set background=dark
 " set term=screen-256color
 " highlight Pmenu ctermbg=bg ctermfg=white guibg=DarkGreen
 highlight Pmenu ctermbg=black ctermfg=white guibg=Non
@@ -685,6 +707,13 @@ highlight ColorColumn ctermbg=black
 set foldmethod=marker
 "}}}
 "{{{ Some other key mappings and settings
+" Copy the filepath of the current buffer to system clipboard
+noremap yf :let @+=expand("%:p:h")<CR>
+" The following is for the mathematica script file type
+augroup wls
+  au!
+  autocmd BufNewFile,BufRead *.wls set filetype=wls
+augroup END
 nnoremap <silent> <leader>gg :LazyGit<CR>
 nnoremap <space>p :PencilToggle<cr>
 " Visual <c-r>: replace/substitute the visual selected part.{{{

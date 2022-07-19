@@ -1,26 +1,26 @@
 # A valid snippet should starts with:
 
 #
-#		snippet trigger_word [ "description" [ options ] ]
+#    snippet trigger_word [ "description" [ options ] ]
 
 #
-#		endsnippet
+#    endsnippet
 #
 # Snippet options:
 #
-#		b - Beginning of line.
-#		i - In-word expansion.
-#		w - Word boundary.
-#		r - Regular expression
-#		e - Custom context snippet
-#		A - Snippet will be triggered automatically, when condition matches.
+#    b - Beginning of line.
+#    i - In-word expansion.
+#    w - Word boundary.
+#    r - Regular expression
+#    e - Custom context snippet
+#    A - Snippet will be triggered automatically, when condition matches.
 #
 # Basic example:
 #
-#		snippet emitter "emitter properties" b
-#		private readonly ${1} = new Emitter<$2>()
-#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
-#		endsnippet
+#    snippet emitter "emitter properties" b
+#    private readonly ${1} = new Emitter<$2>()
+#    public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#    endsnippet
 #
 # Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
 #{{{ global !p
@@ -38,54 +38,54 @@ ignore = texIgnoreMathZoneIds[0]
 #}}}
 #{{{ math()
 def math():
-		synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
-		try:
-				first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
-				return first != ignore
-		except StopIteration:
-				return False
+    synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+    try:
+        first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
+        return first != ignore
+    except StopIteration:
+        return False
 # def math():
-# 		return True
+#     return True
 #}}}
 #{{{ create_table(snip)
 def create_table(snip):
-	rows = snip.buffer[snip.line].split('x')[0]
-	cols = snip.buffer[snip.line].split('x')[1]
+  rows = snip.buffer[snip.line].split('x')[0]
+  cols = snip.buffer[snip.line].split('x')[1]
 
-	int_val = lambda string: int(''.join(s for s in string if s.isdigit()))
+  int_val = lambda string: int(''.join(s for s in string if s.isdigit()))
 
-	rows = int_val(rows)
-	cols = int_val(cols)
+  rows = int_val(rows)
+  cols = int_val(cols)
 
-	offset = cols + 1
-	old_spacing = snip.buffer[snip.line][:snip.buffer[snip.line].rfind('\t') + 1]
+  offset = cols + 1
+  old_spacing = snip.buffer[snip.line][:snip.buffer[snip.line].rfind('\t') + 1]
 
-	snip.buffer[snip.line] = ''
+  snip.buffer[snip.line] = ''
 
-	final_str = '\\renewcommand{\\arraystretch}{1.2}\n' + old_spacing + "\\begin{tabular}{|" + "c|".join(['$' + str(i + 1) for i in range(cols)]) + "c|}\n"
+  final_str = '\\renewcommand{\\arraystretch}{1.2}\n' + old_spacing + "\\begin{tabular}{|" + "c|".join(['$' + str(i + 1) for i in range(cols)]) + "c|}\n"
 
-	for i in range(rows):
-		final_str += old_spacing + '\t'
-		final_str += " & ".join(['$' + str(i * cols + j + offset) for j in range(cols)])
+  for i in range(rows):
+    final_str += old_spacing + '\t'
+    final_str += " & ".join(['$' + str(i * cols + j + offset) for j in range(cols)])
 
-		final_str += " \\\\\\\n"
+    final_str += " \\\\\\\n"
 
-	final_str += old_spacing + "\\end{tabular}\n$0"
+  final_str += old_spacing + "\\end{tabular}\n$0"
 
-	snip.expand_anon(final_str)
+  snip.expand_anon(final_str)
 #}}}
 #{{{ add_row(snip)
 def add_row(snip):
-	row_len = int(''.join(s for s in snip.buffer[snip.line] if s.isdigit()))
-	old_spacing = snip.buffer[snip.line][:snip.buffer[snip.line].rfind('\t') + 1]
+  row_len = int(''.join(s for s in snip.buffer[snip.line] if s.isdigit()))
+  old_spacing = snip.buffer[snip.line][:snip.buffer[snip.line].rfind('\t') + 1]
 
-	snip.buffer[snip.line] = ''
+  snip.buffer[snip.line] = ''
 
-	final_str = old_spacing
-	final_str += " & ".join(['$' + str(j + 1) for j in range(row_len)])
-	final_str += " \\\\\\"
+  final_str = old_spacing
+  final_str += " & ".join(['$' + str(j + 1) for j in range(row_len)])
+  final_str += " \\\\\\"
 
-	snip.expand_anon(final_str)
+  snip.expand_anon(final_str)
 #}}}
 endglobal
 #}}}
@@ -133,28 +133,55 @@ snippet ii "italic"
 endsnippet
 #}}}
 #{{{ qd "quad"
-snippet qd "quad"
+snippet qd "quad" iA
 \quad $0
 endsnippet
 #}}}
 #{{{ qqd "qquad"
-snippet qqd "qquad"
+snippet qqd "qquad" iA
 \qquad $0
 endsnippet
 #}}}
 #{{{ lra "leftrightarrow"
-snippet lra "leftrightarrow"
+context "math()"
+snippet lra "leftrightarrow" iA
 \leftrightarrow $0
 endsnippet
 #}}}
 #{{{ Lra "Leftrightarrow"
-snippet Lra "Leftrightarrow"
+context "math()"
+snippet Lra "Leftrightarrow" iA
 \Leftrightarrow $0
 endsnippet
 #}}}
 #{{{ LRA "Leftrightarrow"
-snippet LRA "Longleftrightarrow"
+context "math()"
+snippet LRA "Longleftrightarrow" iA
 \Longleftrightarrow $0
+endsnippet
+#}}}
+#{{{ ra "rightarrow"
+context "math()"
+snippet righta "rightarrow" iA
+\rightarrow $0
+endsnippet
+#}}}
+#{{{ Ra "Rightarrow"
+context "math()"
+snippet Ra "Rightarrow" iA
+\Rightarrow $0
+endsnippet
+#}}}
+#{{{ RA "Longrightarrow"
+context "math()"
+snippet RA "Longrightarrow" iA
+\Longrightarrow $0
+endsnippet
+#}}}
+#{{{ net "net"
+context "math()"
+snippet net "net" iA
+\langle x_\alpha\rangle$0
 endsnippet
 #}}}
 
@@ -201,14 +228,14 @@ endsnippet
 #{{{ ali "align*" bA
 snippet ali "Align" bA
 \begin{align*}
-	${1:${VISUAL}}
+  ${1:${VISUAL}}
 \end{align*}
 endsnippet
 #}}}
 #{{{ ee "equation*" bA
 snippet ee "equation*" bA
 \begin{equation*}
-	${1:${VISUAL}}
+  ${1:${VISUAL}}
 \end{equation*}
 endsnippet
 #}}}
@@ -216,81 +243,81 @@ endsnippet
 snippet mk "Math" wA
 $${1}$`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
-	snip.rv = ' '
+  snip.rv = ' '
 else:
-	snip.rv = ''
+  snip.rv = ''
 `$2
 endsnippet
 #}}}
 #{{{ beg "begin{} / end{}" bA
 snippet beg "begin{} / end{}" bA
 \\begin{$1}
-	$0
+  $0
 \\end{$1}
 endsnippet
 #}}}
 #{{{ bigfun "Big function" iA
 snippet bigfun "Big function" iA
 \begin{align*}
-	$1: $2 &\longrightarrow $3 \\\\
-	$4 &\longmapsto $1($4) = $0
+  $1: $2 &\longrightarrow $3 \\\\
+  $4 &\longmapsto $1($4) = $0
 \end{align*}
 endsnippet
 #}}}
 #{{{ table
 snippet table "Table environment" b
 \begin{table}[${1:htpb}]
-	\centering
-	\caption{${2:caption}}
-	\label{tab:${3:label}}
-	\renewcommand{\arraystretch}{1.2}
-	\begin{tabular}{${5:c}}
-	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
-	\end{tabular}
+  \centering
+  \caption{${2:caption}}
+  \label{tab:${3:label}}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{${5:c}}
+  $0${5/((?<=.)c|l|r)|./(?1: & )/g}
+  \end{tabular}
 \end{table}
 endsnippet
 #}}}
 #{{{ ScreenShot "Comment on screen shot figure"
 snippet ScreenShot "Comment on screen shot figure"
 \begin{center}
-	\begin{tikzpicture}[scale=1, transform shape]
-		\node (fig) at (0,0) {\includegraphics[scale=0.25]{${1:Filename.jpg} }};
-		\pause
-		\draw[red] (-3,-0.33) rectangle ++(6,+3) node [right] {Group $X$};
-		\pause
-		\draw[red] (-3,-0.36) rectangle ++(6,-3) node [right] {Group $Y$};
-	\end{tikzpicture}
+  \begin{tikzpicture}[scale=1, transform shape]
+    \node (fig) at (0,0) {\includegraphics[scale=0.25]{${1:Filename.jpg} }};
+    \pause
+    \draw[red] (-3,-0.33) rectangle ++(6,+3) node [right] {Group $X$};
+    \pause
+    \draw[red] (-3,-0.36) rectangle ++(6,-3) node [right] {Group $Y$};
+  \end{tikzpicture}
 \end{center}
 endsnippet
 #}}}
 #{{{ fig
 snippet fig "Figure environment" b
 \begin{figure}[${1:htpb}]
-	\centering
-	${2:\includegraphics[width=0.8\textwidth]{$3}}
-	\caption{${4:$3}}
-	\label{fig:${5:${3/\W+/-/g}} }
+  \centering
+  ${2:\includegraphics[width=0.8\textwidth]{$3}}
+  \caption{${4:$3}}
+  \label{fig:${5:${3/\W+/-/g}} }
 \end{figure}
 endsnippet
 #}}}
 #{{{ enum
 snippet enum "Enumerate" bA
 \begin{enumerate}
-	\item $0
+  \item $0
 \end{enumerate}
 endsnippet
 #}}}
 #{{{ item
 snippet item "Itemize" bA
 \begin{itemize}
-	\item $0
+  \item $0
 \end{itemize}
 endsnippet
 #}}}
 #{{{ desc
 snippet desc "Description" b
 \begin{description}
-	\item[$1] $0
+  \item[$1] $0
 \end{description}
 endsnippet
 #}}}
@@ -388,10 +415,10 @@ stripped = match.string[:-1]
 depth = 0
 i = len(stripped) - 1
 while True:
-	if stripped[i] == ')': depth += 1
-	if stripped[i] == '(': depth -= 1
-	if depth == 0: break;
-	i-=1
+  if stripped[i] == ')': depth += 1
+  if stripped[i] == '(': depth -= 1
+  if depth == 0: break;
+  i-=1
 snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
 `{$1}$0
 endsnippet
@@ -487,8 +514,8 @@ snippet lr[ "left[ right]" i
 endsnippet
 #}}}
 context "math()"
-#{{{ lra "leftangle rightangle" iA
-snippet lrag "leftangle rightangle" iA
+#{{{ lr< "leftangle rightangle" iA
+snippet lr< "leftangle rightangle" iA
 \left<${1:${VISUAL}}\right>$0
 endsnippet
 #}}}
@@ -586,6 +613,18 @@ context "math()"
 #{{{ >= "geq" iA
 snippet >= "geq" iA
 \ge
+endsnippet
+#}}}
+context "math()"
+#{{{ >~ "gtrsim" iA
+snippet >~ "gtrsim" iA
+\gtrsim
+endsnippet
+#}}}
+context "math()"
+#{{{ <~ "lesssim" iA
+snippet <~ "lesssim" iA
+\lesssim
 endsnippet
 #}}}
 context "math()"
@@ -697,8 +736,8 @@ endsnippet
 #}}}
 context "math()"
 #{{{ norm "norm" iA
-snippet norm "norm" iA
-\|$1\|$0
+snippet ||| "norm" iA
+\Norm{${1:InputHere}}$0
 endsnippet
 #}}}
 priority 100
@@ -793,7 +832,7 @@ endsnippet
 #}}}
 context "math()"
 #{{{ cc "subset" Ai
-snippet cc "subset" Ai
+snippet cc "subset" iA
 \subset
 endsnippet
 #}}}
@@ -891,7 +930,7 @@ context "math()"
 #{{{ case "cases" wA
 snippet case "cases" wA
 \begin{cases}
-	$1
+  $1
 \end{cases}
 endsnippet
 #}}}
@@ -968,19 +1007,19 @@ endsnippet
 #{{{ SHEeq "Equation for SHE"
 snippet SHEeq "Equation for SHE"
 \begin{align}
-	\tag{SHE}
-	\begin{cases}
-		\displaystyle \frac{\partial u}{\partial t}(t,x) = \frac{1}{2} \Delta u(t,x) + \theta V(t,x) u(t,x)& t>0,\: x\in\R^d, \\\\
-		\displaystyle u(0,x) = u_0(x)
-	\end{cases}
-	\label{E:SHE}
+  \tag{SHE}
+  \begin{cases}
+    \displaystyle \frac{\partial u}{\partial t}(t,x) = \frac{1}{2} \Delta u(t,x) + \theta V(t,x) u(t,x)& t>0,\: x\in\R^d, \\\\
+    \displaystyle u(0,x) = u_0(x)
+  \end{cases}
+  \label{E:SHE}
 \end{align}
 endsnippet
 #}}}
 #{{{ COVeq "Equation for Cov"
 snippet COVeq "Equation for Cov"
 \begin{align*}
-	\Cov\left(V(s,x),V(t,y)\right) = \gamma_0(s-t)\gamma(x-y).
+  \Cov\left(V(s,x),V(t,y)\right) = \gamma_0(s-t)\gamma(x-y).
 \end{align*}
 endsnippet
 #}}}
@@ -989,30 +1028,30 @@ snippet VariationEeq "Variational constant E in XChen16AOP"
 Let $W^{1,2}(\R^d)$ be the Sobolev space of all functions $g\in\R^d$ such that
 both $g$ and $\nabla g\in L^2(\R^d)$. Denote
 \begin{align*}
-	\mathcal{A}_d := \bigg\\{g(\cdot,\circ)\:: & \: g(s,\circ)\in W^{1,2}(\R^d), \: g(s,\cdot)\in L^2(\R^d), \: \forall s\in [0,1]\\\\
+  \mathcal{A}_d := \bigg\\{g(\cdot,\circ)\:: & \: g(s,\circ)\in W^{1,2}(\R^d), \: g(s,\cdot)\in L^2(\R^d), \: \forall s\in [0,1]\\\\
                                             & \quad \text{and} \quad \int_0^1\int_{\R^d}\left|\nabla_x g(s,x)\right|^2\d x\d s <\infty\bigg\\}
 \end{align*}
 and
 \begin{align*}
-	\mathcal{E}\left(\alpha_0,d,\gamma\right) = \sup_{g\in \mathcal{A}_d}\bigg\\{
-	\int_0^1\int_0^1\int_{\R^d\times\R^d}
-	&\frac{\gamma(x-y)}{\left|r-s\right|^{\alpha_0}} g^2(s,x) g^2(r,y) \d x\d y\d r\d s\\\\
-	&-\frac{1}{2}\int_0^1\int_{\R^d} \left|\nabla_x g(s,x)\right|^2\d x\d s<\infty
-	\bigg\\}
+  \mathcal{E}\left(\alpha_0,d,\gamma\right) = \sup_{g\in \mathcal{A}_d}\bigg\\{
+  \int_0^1\int_0^1\int_{\R^d\times\R^d}
+  &\frac{\gamma(x-y)}{\left|r-s\right|^{\alpha_0}} g^2(s,x) g^2(r,y) \d x\d y\d r\d s\\\\
+  &-\frac{1}{2}\int_0^1\int_{\R^d} \left|\nabla_x g(s,x)\right|^2\d x\d s<\infty
+  \bigg\\}
 \end{align*}
 endsnippet
 #}}}
 #{{{ Fdeq "The space F_d in XChen16AOP"
 snippet Fdeq "The space F_d in XChen16AOP"
 \begin{align*}
-	\mathcal{F}_d = \left\\{g\in W^{1,2}\left(\R^d\right):\: \int_{\R^d} g^2(x)\d x=1\right\\}
+  \mathcal{F}_d = \left\\{g\in W^{1,2}\left(\R^d\right):\: \int_{\R^d} g^2(x)\d x=1\right\\}
 \end{align*}
 endsnippet
 #}}}
 #{{{ VarEn "Variation constant E_n"
 snippet VarEn "Variation constant E_n in XChen15AIHP"
 \begin{align*}
-	\mathcal{E}_n(\theta) = \sup_{g\in \mathcal{F}_n} \left\\{\theta\sum_{1\le j<k\le n}\int_{\R^n} \delta_0(x_j-x_k)g^2(x)\d x -\frac{1}{2}\int_{\R^n}\left|\nabla g(x)\right|^2 \d x\right\\},\quad \theta>0.
+  \mathcal{E}_n(\theta) = \sup_{g\in \mathcal{F}_n} \left\\{\theta\sum_{1\le j<k\le n}\int_{\R^n} \delta_0(x_j-x_k)g^2(x)\d x -\frac{1}{2}\int_{\R^n}\left|\nabla g(x)\right|^2 \d x\right\\},\quad \theta>0.
 \end{align*}
 endsnippet
 #}}}
@@ -1090,12 +1129,12 @@ endsnippet
 #{{{ tikz "Tikz figure genenral framework"
 snippet tikz "Tikz figure genenral framework" w
 \begin{figure}[htb]
-	\centering
-	\begin{tikzpicture}
-		$0
-	\end{tikzpicture}
-	\caption{$1}
-	\label{fig:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga} }}
+  \centering
+  \begin{tikzpicture}
+    $0
+  \end{tikzpicture}
+  \caption{$1}
+  \label{fig:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga} }}
 \end{figure}
 endsnippet
 #}}}
@@ -1108,92 +1147,200 @@ endsnippet
 snippet tikzhist "Draw a histogram " b
 %\usepackage{pgfplots}
 \begin{tikzpicture}
-	\begin{axis}[
-		ymin=0, ymax=55,
-		minor y tick num = 3,
-		area style,
-		]
-		\addplot+[ybar interval,mark=no] plot coordinates {
-			(0, 5)
-			(5, 35)
-			(10, 50)
-			(15, 30)
-			(20, 15)
-			(25, 0)
-			};
-	\end{axis}
+  \begin{axis}[
+    ymin=0, ymax=55,
+    minor y tick num = 3,
+    area style,
+    ]
+    \addplot+[ybar interval,mark=no] plot coordinates {
+      (0, 5)
+      (5, 35)
+      (10, 50)
+      (15, 30)
+      (20, 15)
+      (25, 0)
+      };
+  \end{axis}
 \end{tikzpicture}
 endsnippet
 #}}}
 #{{{ tikztree2
 snippet tikztree2 "Draw a binomial tree" b
 \begin{center}
-	\begin{tikzpicture}[level distance=1.5cm,
-		level 1/.style={sibling distance=3cm},
-		level 2/.style={sibling distance=1.5cm}]
-		\node {root}
-			child[grow=30] {node {left}}
-			child[grow=-30] {node {right}};
-	\end{tikzpicture}
+  \begin{tikzpicture}[level distance=1.5cm,
+    level 1/.style={sibling distance=3cm},
+    level 2/.style={sibling distance=1.5cm}]
+    \node {root}
+      child[grow=30] {node {left}}
+      child[grow=-30] {node {right}};
+  \end{tikzpicture}
 \end{center}
 endsnippet
 #}}}
 #{{{ tikztree1
 snippet tikztree1 "Draw a binomial tree" b
 \begin{center}
-	\begin{tikzpicture}[level distance=10mm,
-		sibling distance=10mm,
-		every node/.style={inner sep=5pt},
-		arrow/.style={edge from parent/.style={draw}}
-	]
+  \begin{tikzpicture}[level distance=10mm,
+    sibling distance=10mm,
+    every node/.style={inner sep=5pt},
+    arrow/.style={edge from parent/.style={draw}}
+  ]
 
-	\node {0}
-	child[grow=right] {
-	child {node{40}} child {node{50}} child[arrow] {node{60}}
-	};
-	\end{tikzpicture}
+  \node {0}
+  child[grow=right] {
+  child {node{40}} child {node{50}} child[arrow] {node{60}}
+  };
+  \end{tikzpicture}
 \end{center}
 endsnippet
 #}}}
 #{{{ tikzdraw1
 snippet tikzdraw1 "Draw a tikz" b
 \begin{center}
-	\begin{tikzpicture}[scale=1, transform shape]
-		\tikzset{>=latex}
-		\coordinate (P) at (0.2,1.5);
-		\coordinate (Q) at (3,0.3);
-		\coordinate (0) at (0,0);
-		\draw (P) -- coordinate[pos={1/3}] (A) coordinate[pos={2/3}] (B) (Q) node [right] {$Q$};
-		\draw [->,dashed] (0) node [below] {${0:here}} -- (P) node [above] {$P$};
-		\draw [->,dashed] (0) -- (A) node [above] {$A$};
-		\draw [->,dashed] (0) -- (B) node [above] {$B$};
-		\filldraw (P) circle (0.05);
-		\filldraw (Q) circle (0.05);
-		\filldraw (0) circle (0.05);
-		\filldraw (A) circle (0.05);
-		\filldraw (B) circle (0.05);
-	\end{tikzpicture}
+  \begin{tikzpicture}[scale=1, transform shape]
+    \tikzset{>=latex}
+    \coordinate (P) at (0.2,1.5);
+    \coordinate (Q) at (3,0.3);
+    \coordinate (0) at (0,0);
+    \draw (P) -- coordinate[pos={1/3}] (A) coordinate[pos={2/3}] (B) (Q) node [right] {$Q$};
+    \draw [->,dashed] (0) node [below] {${0:here}} -- (P) node [above] {$P$};
+    \draw [->,dashed] (0) -- (A) node [above] {$A$};
+    \draw [->,dashed] (0) -- (B) node [above] {$B$};
+    \filldraw (P) circle (0.05);
+    \filldraw (Q) circle (0.05);
+    \filldraw (0) circle (0.05);
+    \filldraw (A) circle (0.05);
+    \filldraw (B) circle (0.05);
+  \end{tikzpicture}
 \end{center}
 endsnippet
 #}}}
 #{{{ tikzdraw2
 snippet tikzdraw2 "Draw a tikz" b
 \begin{center}
-	\begin{tikzpicture}[scale=1, transform shape]
-	\tikzset{>=latex}
-	\coordinate (L) at (3.1,0.4);
-	\coordinate (P0) at (0.2,1.6);
-	\coordinate (0) at (0,0);
-	\coordinate (P) at (3,2.22);
-	\draw ($(P)!-1cm!(P0)$)  -- (P) node [below]  {$P$} -- (P0) node [above] {$P_0$} -- ($(P0)!-1cm!(P)$) node [left] {$L$};
-	\draw [thick,->,color=blue] (P0) --coordinate [pos={1/2}] (m) node [above] {${\vec{d}}$} ($(P)!1cm!(P0)$);
-	\draw[dashed,->] (0) node [below] {${0:here}} -- (P0);
-	\draw[dashed,->] (0) -- (P);
-	\filldraw (P) circle (0.05);
-	\filldraw (P0) circle (0.05);
-	\filldraw (0) circle (0.05);
+  \begin{tikzpicture}[scale=1, transform shape]
+  \tikzset{>=latex}
+  \coordinate (L) at (3.1,0.4);
+  \coordinate (P0) at (0.2,1.6);
+  \coordinate (0) at (0,0);
+  \coordinate (P) at (3,2.22);
+  \draw ($(P)!-1cm!(P0)$)  -- (P) node [below]  {$P$} -- (P0) node [above] {$P_0$} -- ($(P0)!-1cm!(P)$) node [left] {$L$};
+  \draw [thick,->,color=blue] (P0) --coordinate [pos={1/2}] (m) node [above] {${\vec{d}}$} ($(P)!1cm!(P0)$);
+  \draw[dashed,->] (0) node [below] {${0:here}} -- (P0);
+  \draw[dashed,->] (0) -- (P);
+  \filldraw (P) circle (0.05);
+  \filldraw (P0) circle (0.05);
+  \filldraw (0) circle (0.05);
+  \end{tikzpicture}
+\end{center}
+endsnippet
+#}}}
+#{{{ tikzdraw3 "Tickz plot coordinates" b
+snippet tikzdraw3 "Tickz plot coordinates" b
+\begin{center}
+	\begin{tikzpicture}[scale=0.8, transform shape]
+		\begin{axis}[
+			axis lines = left,
+			xtick={0, 15, 23, 46, 64, 100},
+			ytick={0,         0.2529,           0.5073,                    0.9483},
+			yticklabels={0, $\frac{1}{2\pi}$, $\frac{2 \sqrt{2}}{3\pi}$, $\frac{1}{2}$},
+			% legend style={at={(1.0,0.9)},anchor=north},
+			% legend style={draw=none},
+			% xmin=-8,
+			xlabel=$n$,
+			ylabel=$\mathbb{P}(A)$,
+			xmax=110,
+			ymax=1.1,
+			]
+			% \addplot[smooth,domain=-9:9,dashed,thin] {0};
+
+	\addplot[domain=-9:9,red,very thick,smooth] coordinates {
+		\input{./${1:FigName}.table}
+	};
+		 \def\x{15}
+		 \def\y{0.2529}
+		 \addplot[thick, samples=50, smooth,domain=0:101, dashed] coordinates {(\x,0.02) (\x  ,\y)};
+		 \addplot[thick, samples=50, smooth,domain=0:101, dashed] coordinates {(\x,\y)   (1.50,\y)};
+		 \def\x{23}
+		 \def\y{0.5073}
+		 \addplot[thick, samples=50, smooth,domain=0:101, dashed] coordinates {(\x,0.02) (\x  ,\y)};
+		 \addplot[thick, samples=50, smooth,domain=0:101, dashed] coordinates {(\x,\y)   (1.50,\y)};
+		 \def\x{46}
+		 \def\y{0.9483}
+		 \addplot[thick, samples=50, smooth,domain=0:101, dashed] coordinates {(\x,0.02) (\x  ,\y)};
+		 \addplot[thick, samples=50, smooth,domain=0:101, dashed] coordinates {(\x,\y)   (1.50,\y)};
+		 % \def\x{100}
+		 % \def\y{1.000}
+		 % \addplot[thick, samples=50, smooth,domain=0:101, dashed] coordinates {(\x,0.02) (\x  ,\y)};
+		 % \addplot[thick, samples=50, smooth,domain=0:101, dashed] coordinates {(\x,\y)   (1.50,\y)};
+	\end{axis}
 	\end{tikzpicture}
 \end{center}
+% Do not remove the following commented codes.
+% \begin{codes} %math
+%
+% (* Plot Theta *)
+% FigName = "$1"
+% res = Table[{\[Beta],
+%       NIntegrate[
+%        1/(2 \[Pi])
+%           MittagLefflerE[\[Beta],
+%           Ceiling[\[Beta]], -\[Nu]/2 x^2]^2 /. \[Nu] ->
+%          2, {x, -\[Infinity], \[Infinity]}]}, {\[Beta], 0.001, 1.999,
+%       0.01}]
+% Export[FigName<>".table", res, "CSV"]
+% Run["csv-coordinates.sh "<>FigName<>".table"]
+%
+% \end{codes}
+endsnippet
+#}}}
+
+#{{{  tikzdraw4 "description"
+snippet tikzdraw4 "Draw data columns from csv file" b
+\begin{figure}[htpb]
+  \centering
+  \begin{center}
+    \begin{tikzpicture}[scale=0.8, transform shape]
+      \begin{axis}[
+        axis lines = middle,
+        % xtick={0, 15, 23, 46, 64, 100},
+        % ytick={0,         0.2529,           0.5073,                    0.9483},
+        % yticklabels={0, $\frac{1}{2\pi}$, $\frac{2 \sqrt{2}}{3\pi}$, $\frac{1}{2}$},
+        legend style={at={(axis description cs: 0.1,1.1)},anchor=north},
+        legend style={draw=none},
+        xmax=9,
+        ymax= 8.2,
+        ymin=-8.2,
+        xmin=-5,
+        xlabel=$x$,
+        ylabel=$g_3(x)$,
+        x label style={at={(axis description cs:1.1,0.5)}},
+        y label style={at={(axis description cs:0.3,1.15)}},
+        ]
+        \addplot[mark=none, smooth, blue, thick] table[ x index=0, y index=1, col sep=comma] {${1:CSV}.csv};
+        \addlegendentry{$\alpha=1$}
+        \addplot[mark=none, smooth, red, dashed, very thick] table[ x index=0, y index=2, col sep=comma] {$1.csv};
+        \addlegendentry{$\alpha=\sfrac{1}{4}$}
+        \draw[dotted,thick] (axis cs: -4.2,-4.2) -- (axis cs: 8.2,  8.2);
+        \draw[dotted,thick] (axis cs: -4.2,+4.2) -- (axis cs: 8.2, -8.2);
+    \end{axis}
+    \end{tikzpicture}
+  \end{center}
+
+% Do not remove the following commented codes.
+% \begin{codes} %math
+%
+% (* Plot Theta *)
+% FigName = "$1.csv"
+% res = Table[{x, x Sin[x Log[1 + Abs[x]]], x Sin[x Log[1 + Abs[x]]^(1/4)]}, {x, -4, 8, 0.02}]
+% Export[FigName, res, "CSV"]
+%
+% \end{codes}
+
+  \caption{Plot of the function $g_3(x)$ in Example \ref{Eg:Lip}.}
+
+  \label{F:Lip}
+\end{figure}
 endsnippet
 #}}}
 #{{{TikzMind "Template for a mindmap in an independent document"
@@ -1253,18 +1400,18 @@ endsnippet
 #{{{ plot "Plot" w
 snippet plot "Plot" w
 \begin{figure}[$1]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-			xmin= ${2:-10}, xmax= ${3:10},
-			ymin= ${4:-10}, ymax = ${5:10},
-			axis lines = middle,
-		]
-			\addplot[domain=$2:$3, samples=${6:100}]{$7};
-		\end{axis}
-	\end{tikzpicture}
-	\caption{$8}
-	\label{${9:$8}}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      xmin= ${2:-10}, xmax= ${3:10},
+      ymin= ${4:-10}, ymax = ${5:10},
+      axis lines = middle,
+    ]
+      \addplot[domain=$2:$3, samples=${6:100}]{$7};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{$8}
+  \label{${9:$8}}
 \end{figure}
 endsnippet
 #}}}
@@ -1273,9 +1420,9 @@ snippet drawfunction "Draw a function in tikz"
 \begin{tikzpicture}
   \draw[scale=0.5, domain=-3:3, smooth, variable=\x, blue] plot ({\x}, {\x*\x});
   \draw[scale=0.5, domain=-3:3, smooth, variable=\y, red]  plot ({\y*\y}, {\y});
-	\foreach \x in {0,...,4}{
-			\draw (\x,0.1)--++(0,-0.2) node [below] {$\x$};
-	}
+  \foreach \x in {0,...,4}{
+      \draw (\x,0.1)--++(0,-0.2) node [below] {$\x$};
+  }
   \draw[->] (-3, 0) -- (4.2, 0) node[right] {$x$};
   \draw[->] (0, -3) -- (0, 4.2) node[above] {$y$};
 \end{tikzpicture}
@@ -1330,20 +1477,18 @@ endsnippet
 # The following are for beamer slides
 #{{{ bfrm -- One beamer slide for course
 snippet bfrm "One beamer slide for course" b
-%-------------- start slide -------------------------------%{{{ 1
-\begin{frame}[fragile,t]
-	\frametitle{${1:title}}
-	${0:${VISUAL}}
+\begin{frame}[fragile,t] % COMENTS
+  \frametitle{${1:title}}
+  ${0:${VISUAL}}
 \end{frame}
-%-------------- end slide -------------------------------%}}}
 endsnippet
 #}}}
 #{{{ tfrm -- One beamer slide for talk
 snippet tfrm "One beamer slide for talk" b
 % {{{ 1.
 \begin{frame}[fragile]
-	\frametitle{${1:title}}
-	${0:${VISUAL}}
+  \frametitle{${1:title}}
+  ${0:${VISUAL}}
 \end{frame}
 % }}}
 endsnippet
@@ -1364,7 +1509,7 @@ snippet pfrm "One beamer slide for problem" b
 \end{problem}
 \pause
 Answer: ${1:title}}
-	${0:${VISUAL}}
+  ${0:${VISUAL}}
 \end{frame}
 %-------------- end slide -------------------------------%}}}
 endsnippet
@@ -1377,7 +1522,7 @@ snippet cfrm "Centered beamer slide" b
  \begin{center}
  \begin{minipage}{0.6\textwidth}
  \begin{center}
-	${0:${VISUAL}}
+  ${0:${VISUAL}}
 \end{center}
  \end{minipage}
 \end{center}
@@ -1525,6 +1670,20 @@ Balan, Raluca M. and Le Chen
 \end{thebibliography}
 
 \end{document}
+endsnippet
+#}}}
+# namedate "Nane date in the head" b{{{
+snippet namedate "Nane date in the head" b
+% -------------------------------------------------
+%
+% | |    ___   / ___| |__   ___ _ __
+% | |   / _ \ | |   | '_ \ / _ \ '_ \
+% | |__|  __/ | |___| | | |  __/ | | |
+% |_____\___|  \____|_| |_|\___|_| |_|
+%
+%  Created on `date`
+%
+% -------------------------------------------------
 endsnippet
 #}}}
 #{{{ Report
@@ -1693,7 +1852,7 @@ $0
 endsnippet
 #}}}
 #{{{ Review "Reviewing article" b
-snippet	Review "Reviewing article" b
+snippet  Review "Reviewing article" b
 \documentclass[12pt]{article} %{{{
 \usepackage[text={6.2in,8.6in},centering]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathrsfs}
@@ -1703,7 +1862,7 @@ snippet	Review "Reviewing article" b
 \usepackage{url}
 \usepackage[colorlinks=true,
             linkcolor=blue,
-            filecolor=magenta,      
+            filecolor=magenta,
             urlcolor=cyan,
             citecolor=magenta,
             pdftitle={Reviewing report},
@@ -1719,8 +1878,8 @@ snippet	Review "Reviewing article" b
 %             backref=true,
 %             abbreviate=true]{biblatex}
 \usepackage[backend=biber,
-						style=alphabetic,
-						natbib=true,
+      style=alphabetic,
+      natbib=true,
             abbreviate=true]{biblatex}
 % \usepackage{citeall}
 % \usepackage[notref,notcite]{showkeys}
@@ -1765,7 +1924,7 @@ snippet	Review "Reviewing article" b
  \clearlist{location}
  \clearfield{month}
  \clearfield{series}
- 
+
  \ifentrytype{book}{}{% Remove publisher and editor except for books
   \clearlist{publisher}
   \clearname{editor}
@@ -1786,27 +1945,27 @@ end
 
 lfs = require("lfs")
 if file_exists("notes.tex")==false then
-	os.execute("touch notes.tex")
+  os.execute("touch notes.tex")
 end
 if file_exists("All.bib")==false then
-	os.execute("ln -s ~/Dropbox/workspace/svn/refdb/All.bib All.bib")
+  os.execute("ln -s ~/Dropbox/workspace/svn/refdb/All.bib All.bib")
 end
 if file_exists("table") then
-	Data = dofile("table")
+  Data = dofile("table")
 else
-	Data = {
-		Author    = 'Lyu Yangyang and Li Heyu',
-		Journal   = 'Acta Mathematica Scientia',
-		Editor    = 'Hu Yaozhong',
-		From      = '10/11/2021',
-		Deadline  = '01/10/2022',
-		Completed = ' ',
-		Title     = 'Almost surely time-space intermittency for the parabolic Anderson model with log-correlated Gaussian field',
-		Decision  = '---',
-		Report    = './Review.pdf',
-		Paper     = './AMSC-D-21-00554.pdf',
-		Path	  = lfs.currentdir()
-	}
+  Data = {
+    Author    = 'Lyu Yangyang and Li Heyu',
+    Journal   = 'Acta Mathematica Scientia',
+    Editor    = 'Hu Yaozhong',
+    From      = '10/11/2021',
+    Deadline  = '01/10/2022',
+    Completed = ' ',
+    Title     = 'Almost surely time-space intermittency for the parabolic Anderson model with log-correlated Gaussian field',
+    Decision  = '---',
+    Report    = './Review.pdf',
+    Paper     = './AMSC-D-21-00554.pdf',
+    Path    = lfs.currentdir()
+  }
 end
 \end{luacode}
 
@@ -1835,9 +1994,9 @@ In this paper,  \cite{MR3769807} ${0:Start typing here}
 
 % --------------------------- {{{
 \begin{luacode}
-	Data['Completed'] = os.date()
-	Data['Decision'] = '---'
-	loadfile("/home/lechen/lua/saveTable.lua")(Data,"table")
+  Data['Completed'] = os.date()
+  Data['Decision'] = '---'
+  loadfile("/home/lechen/lua/saveTable.lua")(Data,"table")
 \end{luacode}
 \end{document}
 % }}}
@@ -1964,7 +2123,7 @@ snippet Discussion "Discussions" b
 \usepackage{url}
 \usepackage[colorlinks=true,
             linkcolor=blue,
-            filecolor=magenta,      
+            filecolor=magenta,
             urlcolor=cyan,
             citecolor=magenta,
             pdftitle={Comments},
@@ -1983,8 +2142,8 @@ snippet Discussion "Discussions" b
 %             backref=true,
 %             abbreviate=true]{biblatex}
 \usepackage[backend=biber,
-						style=alphabetic,
-						natbib=true,
+            style=alphabetic,
+            natbib=true,
             maxbibnames=99,
             sorting=ynt,
             abbreviate=true]{biblatex}
@@ -2005,7 +2164,7 @@ snippet Discussion "Discussions" b
  \clearlist{location}
  \clearfield{month}
  \clearfield{series}
- 
+
  \ifentrytype{book}{}{% Remove publisher and editor except for books
   \clearlist{publisher}
   \clearname{editor}
@@ -2104,21 +2263,21 @@ Le
 \global\let\savedifeof=\ifeof
 \def\ifeof#1{\global\let\ifeof=\savedifeof\iftrue}%
 \begin{filecontents}{`!p snip.rv = snip.basename`.bib}
-@Article{	  dalang.frangos:98:stochastic,
-  author	= {Dalang, Robert C. and Frangos, N. E.},
-  title		= {The stochastic wave equation in two spatial dimensions},
-  journal	= {Ann. Probab.},
-  fjournal	= {The Annals of Probability},
-  volume	= {26},
-  year		= {1998},
-  number	= {1},
-  pages		= {187--212},
-  issn		= {0091-1798},
-  mrclass	= {60H15},
-  mrnumber	= {1617046},
-  mrreviewer	= {R\'{e}mi L\'{e}andre},
-  doi		= {10.1214/aop/1022855416},
-  url		= {https://doi.org/10.1214/aop/1022855416}
+@Article{    dalang.frangos:98:stochastic,
+  author  = {Dalang, Robert C. and Frangos, N. E.},
+  title    = {The stochastic wave equation in two spatial dimensions},
+  journal  = {Ann. Probab.},
+  fjournal  = {The Annals of Probability},
+  volume  = {26},
+  year    = {1998},
+  number  = {1},
+  pages    = {187--212},
+  issn    = {0091-1798},
+  mrclass  = {60H15},
+  mrnumber  = {1617046},
+  mrreviewer  = {R\'{e}mi L\'{e}andre},
+  doi    = {10.1214/aop/1022855416},
+  url    = {https://doi.org/10.1214/aop/1022855416}
 }
 \end{filecontents}
 \printbibliography[title={References}]
@@ -2157,8 +2316,8 @@ snippet PapisNotes "Papis Notes" b
 %             backref=true,
 %             abbreviate=true]{biblatex}
 \usepackage[backend=biber,
-						style=alphabetic,
-						natbib=true,
+            style=alphabetic,
+            natbib=true,
             abbreviate=true]{biblatex}
 % \usepackage{citeall}
 % \usepackage[notref,notcite]{showkeys}
@@ -2203,7 +2362,7 @@ snippet PapisNotes "Papis Notes" b
 %  \clearlist{location}
 %  \clearfield{month}
 %  \clearfield{series}
-% 
+%
 %  \ifentrytype{book}{}{% Remove publisher and editor except for books
 %   \clearlist{publisher}
 %   \clearname{editor}
@@ -2250,10 +2409,10 @@ end
 
 lfs = require("lfs")
 if file_exists("notes.tex")==false then
-	os.execute("touch notes.tex")
+  os.execute("touch notes.tex")
 end
 if file_exists("All.bib")==false then
-	 os.execute("ln -s ~/Dropbox/workspace/svn/refdb/All.bib All.bib")
+   os.execute("ln -s ~/Dropbox/workspace/svn/refdb/All.bib All.bib")
 end
 if file_exists("table")==false  then
    os.execute("/home/lechen/Dropbox/Research-References/scripts/yaml2table.lua")
@@ -2339,6 +2498,42 @@ endsnippet
 #}}}
 
 
+# The following is from
+# https://github.com/gillescastel/latex-snippets/blob/master/tex.snippets
+# evaluate using sympy or mathematica
+# {{{
+snippet sympy "sympyblock " w
+sympy $1 sympy$0
+endsnippet
+
+priority 10000
+snippet 'sympy(.*)sympy' "sympy" wr
+`!p
+from sympy import *
+x, y, z, t = symbols('x y z t')
+k, m, n = symbols('k m n', integer=True)
+f, g, h = symbols('f g h', cls=Function)
+init_printing()
+snip.rv = eval('latex(' + match.group(1).replace('\\', '').replace('^', '**').replace('{', '(').replace('}', ')') + ')')
+`
+endsnippet
+
+priority 1000
+snippet math "mathematicablock" w
+math $1 math$0
+endsnippet
+
+priority 10000
+snippet 'math(.*)math' "math" wr
+`!p
+import subprocess
+code = match.group(1)
+code = 'ToString[' + code + ', TeXForm]'
+snip.rv = subprocess.check_output(['wolframscript', '-code', code]).strip().decode('ascii')
+`
+endsnippet
+# }}}
+
 # Some other email related ones:
 # Here is my zoom link.{{{
 snippet zoomAU "My Zoom Link for Emory"
@@ -2349,17 +2544,17 @@ Topic: Le Chen's Personal Meeting Room
 
 Join from PC, Mac, Linux, iOS or Android:
 
-	https://auburn.zoom.us/j/8141875411
+  https://auburn.zoom.us/j/8141875411
 
 Connect using Computer/Device audio if possible.
 
 Or Telephone: Meeting ID: 814 187 5411
-	Dial: +1 646 876 9923 (US Toll)
-	or +1 301 715 8592 (US Toll)
+  Dial: +1 646 876 9923 (US Toll)
+  or +1 301 715 8592 (US Toll)
 
 Or an H.323/SIP room system:
-	H.323: 162.255.37.11 (US West) or 162.255.36.11 (US East)
-	Meeting ID: 814 187 5411
+  H.323: 162.255.37.11 (US West) or 162.255.36.11 (US East)
+  Meeting ID: 814 187 5411
 
 SIP: 8141875411@zoomcrc.com
 
@@ -2367,41 +2562,41 @@ endsnippet
 #}}}
 # Here is my zoom link.{{{
 snippet myzoom "My Zoom Link for Emory"
-	Join Zoom Meeting
-	https://emory.zoom.us/j/8015583097
+  Join Zoom Meeting
+  https://emory.zoom.us/j/8015583097
 
-	Meeting ID: 801 558 3097
-	One tap mobile
-	+14703812552,,8015583097# US (Atlanta)
-	+14702509358,,8015583097# US (Atlanta)
+  Meeting ID: 801 558 3097
+  One tap mobile
+  +14703812552,,8015583097# US (Atlanta)
+  +14702509358,,8015583097# US (Atlanta)
 
-	Dial by your location
-					+1 470 381 2552 US (Atlanta)
-					+1 470 250 9358 US (Atlanta)
-					+1 646 558 8656 US (New York)
-					+1 301 715 8592 US (Washington D.C)
-					+1 312 626 6799 US (Chicago)
-					+1 669 900 6833 US (San Jose)
-					+1 253 215 8782 US (Tacoma)
-					+1 346 248 7799 US (Houston)
-	Meeting ID: 801 558 3097
-	Find your local number: https://emory.zoom.us/u/asqwS3mtf
+  Dial by your location
+          +1 470 381 2552 US (Atlanta)
+          +1 470 250 9358 US (Atlanta)
+          +1 646 558 8656 US (New York)
+          +1 301 715 8592 US (Washington D.C)
+          +1 312 626 6799 US (Chicago)
+          +1 669 900 6833 US (San Jose)
+          +1 253 215 8782 US (Tacoma)
+          +1 346 248 7799 US (Houston)
+  Meeting ID: 801 558 3097
+  Find your local number: https://emory.zoom.us/u/asqwS3mtf
 
-	Join by SIP
-	8015583097@zoomcrc.com
+  Join by SIP
+  8015583097@zoomcrc.com
 
-	Join by H.323
-	162.255.37.11 (US West)
-	162.255.36.11 (US East)
-	115.114.131.7 (India Mumbai)
-	115.114.115.7 (India Hyderabad)
-	213.19.144.110 (Amsterdam Netherlands)
-	213.244.140.110 (Germany)
-	103.122.166.55 (Australia)
-	64.211.144.160 (Brazil)
-	69.174.57.160 (Canada)
-	207.226.132.110 (Japan)
-	Meeting ID: 801 558 3097
+  Join by H.323
+  162.255.37.11 (US West)
+  162.255.36.11 (US East)
+  115.114.131.7 (India Mumbai)
+  115.114.115.7 (India Hyderabad)
+  213.19.144.110 (Amsterdam Netherlands)
+  213.244.140.110 (Germany)
+  103.122.166.55 (Australia)
+  64.211.144.160 (Brazil)
+  69.174.57.160 (Canada)
+  207.226.132.110 (Japan)
+  Meeting ID: 801 558 3097
 endsnippet
 #}}}
 #{{{ FPD "Thanks for confirmation"
@@ -2470,7 +2665,8 @@ echo "Chen Le Test"
 echo "$(pwd)"
 `
 
-Something else 
+Something el\begin{align*}
+s
 
 `
 !p snip.rv = snip.path

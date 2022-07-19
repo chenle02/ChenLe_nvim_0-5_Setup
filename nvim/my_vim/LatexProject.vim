@@ -3,6 +3,10 @@ set backspace=0
 set lazyredraw
 set ttyfast
 
+" The following is to make <c-[> work for ctags + bib entries
+" E.g., \cite{chen.hu.ea:17:space-time}
+setlocal iskeyword+=- iskeyword+=.
+
 " Set status line display
 " set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ [BUFFER=%n]\ %{strftime('%c')}
 
@@ -20,10 +24,16 @@ function! RunLuaLatex(TexFileName)
   let execstr="AsyncRun! lualatex --shell-escape --synctex=1 " . a:TexFileName
   " echom execstr
   silent exec execstr
-  if filereadable("All.bib")
-    " let execstr="!ctags -R --options=/home/lechen/Dropbox/mydotfiles/ctags/ctags_latex *.tex " . a:TexFileName . ".bib"
+  let bibfile=split(a:TexFileName,"\\.")[0] . "_biber.bib"
+  " echom bibfile
+  if filereadable(bibfile)
+    let execstr="!ctags -R --options=/home/lechen/Dropbox/mydotfiles/ctags/ctags_latex *.tex " . bibfile
+    silent exec execstr
+  elseif filereadable("All.bib")
     let execstr="!ctags -R --options=/home/lechen/Dropbox/mydotfiles/ctags/ctags_latex *.tex All.bib"
     silent exec execstr
+  else
+    echom "No bib files and ctags has not run~! -- Le Chen"
   endif
   " echom execstr
   " let g:asyncrun_exit = 'silent :lua require("notify")("Asyncrun has done~!", "info")'
@@ -37,12 +47,21 @@ function! LatexBiber()
   let g:asyncrun_exit = 'silent :lua require("notify")("Biber has done~! -- Le", "info")'
   let filenameRoot=expand("%:r")
   let execstr="AsyncRun! biber --output_format=bibtex --output_resolve " . filenameRoot. ".bcf && biber " . filenameRoot
-  " echom execstr
+  echom execstr
   exec execstr
   echom "Done biber now..."
   " let g:asyncrun_exit = 'silent :lua require("notify")("Asyncrun has done~!", "info")'
 endfunction
 autocmd FileType tex noremap <leader>b :update<bar>:call LatexBiber()<CR>
+
+function! CopyAllBib()
+  " echom "Run biber now..."
+  let filenameRoot=expand("%:r")
+  let execstr="AsyncRun! rsync ~/Dropbox/workspace/svn/refdb/All.bib All.bib "
+  exec execstr
+  let g:asyncrun_exit = 'silent :lua require("notify")("Synchronized All.bib~! -- Le", "info")'
+endfunction
+autocmd FileType tex noremap <leader>i :update<bar>:call CopyAllBib()<CR>
 
 function! MyUpdateBib()
   let execstr = ":r " . expand("%:r") . "_biber.bib"
@@ -51,7 +70,7 @@ function! MyUpdateBib()
 endfunction
 
 autocmd FileType,BufEnter,BufWinEnter yaml noremap ff :call SyncYamlZathura()<CR>
-autocmd FileType tex set foldmethod=marker
+" autocmd FileType tex set foldmethod=marker
 autocmd FileType tex set bs=0
 autocmd FileType tex.lua noremap <leader><leader> :Lualatax <CR>
 
@@ -221,9 +240,9 @@ augroup END
 "     endtry
 "     norm gq
 "         let &wrapscan = op_wrapscan
-"     call setpos('.', save_cursor) 
+"     call setpos('.', save_cursor)
 "     endif
-"     norm zz 
+"     norm zz
 " endfun
 "
 " nmap Q :call TeX_fmt()<CR>
@@ -234,6 +253,11 @@ augroup END
 " endfunction
 " nmap <unique><silent> Q :call My_Q()<cr>
 nmap <unique><silent> Q <Plug>latexfmt_format | normal <c-o>
+" }}}
+
+
+" {{{ Here are some abbreviations
+ab matern Mat\'ern
 " }}}
 
 "{{{ Papis
@@ -280,6 +304,18 @@ autocmd FileType tex nnoremap <silent> .i :Telescope bibtex<cr>
 autocmd FileType tex nnoremap <silent> rr yi{w/"zah
 let @l='yi{w/"zah'
 
+
+" Set upt g:bib file and then open it using rofi
+let g:bib = ""
+function! Refs()
+  if len(g:bib) == 0
+    echom "Please set up the bib file by \"let g:bib = ....bib\""
+  else
+    exec "!rg @ " . g:bib . " | sed 's/@.*{//' | sed 's/,//' | rofi -dmenu | xargs open_by_CiteKey.sh"
+  endif
+endfunction
+autocmd FileType tex noremap <silent> <leader>r :call Refs()<cr>
+
 " my script to open papis in a floaterm.
 function PapisRefinFloaterm()
   FloatermSend papis_get_CiteKey.sh a
@@ -300,6 +336,8 @@ function! SyncYamlZathura()
   exec execstr
 endfunction
 autocmd FileType,BufEnter,BufWinEnter yaml noremap <silent> ff :call SyncYamlZathura()<CR>
+autocmd FileType,BufEnter,BufWinEnter yaml noremap <silent> <leader><space> :!zathura output.pdf<CR>
+autocmd FileType,BufEnter,BufWinEnter yaml noremap <silent> <leader>n :!zathura notes.pdf<CR>
 autocmd FileType,BufEnter,BufWinEnter yaml noremap <silent> nn :w!<cr> :!papis edit --notes --doc-folder . <cr> :e notes.tex<cr>
 " Make sure @w is the macro to increase the right page number
 let @w="12"

@@ -56,7 +56,21 @@ let wiki_Math7210_2022Spring.template_path = '$HOME/Dropbox/Teaching/svn_teachin
 let wiki_Math7210_2022Spring.template_default =  'Course'
 let wiki_Math7210_2022Spring.template_ext = '.html'
 "}}}
-"{{{ wiki_Homepage
+"{{{ wiki_Math7800_2022Fall
+let wiki_Math7800_2022Fall = {}
+let wiki_Math7800_2022Fall.path = '$HOME/Dropbox/Teaching/svn_teaching/2022_Fall_Math7800/vimwiki'
+let wiki_Math7800_2022Fall.template_path = '$HOME/Dropbox/Teaching/svn_teaching/2022_Fall_Math7800/vimwiki/templates/'
+let wiki_Math7800_2022Fall.template_default =  'Course'
+let wiki_Math7800_2022Fall.template_ext = '.html'
+"}}}
+"{{{ wiki_Math6030_2022Fall
+let wiki_Math6030_2022Fall = {}
+let wiki_Math6030_2022Fall.path = '$HOME/Dropbox/Teaching/svn_teaching/2022_Fall_Math6030/vimwiki'
+let wiki_Math6030_2022Fall.template_path = '$HOME/Dropbox/Teaching/svn_teaching/2022_Fall_Math6030/vimwiki/templates/'
+let wiki_Math6030_2022Fall.template_default =  'Course'
+let wiki_Math6030_2022Fall.template_ext = '.html'
+"}}}
+"{{{ wiki_Auburn_Homepage
 let wiki_Homepage = {}
 let wiki_Homepage.path = '$HOME/Dropbox/workspace/svn/Job-applications/homepage/Auburn/vimwiki'
 let wiki_Homepage.path_html = '$HOME/Dropbox/workspace/svn/Job-applications/homepage/Auburn/'
@@ -65,11 +79,11 @@ let wiki_Homepage.template_default =  'Auburn'
 let wiki_Homepage.template_ext = '.html'
 "}}}
 "{{{ wiki_R6_RalucaXia
-let wiki_R6_RalucaXia = {}
-let wiki_R6_RalucaXia.path = '$HOME/Dropbox/workspace/svn/Article-Feynman-Kac-Formula-FractionalBM/Rough-in-time-Xia/vimwiki'
-let wiki_R6_RalucaXia.template_path = '$HOME/Dropbox/vimwiki/templates'
-let wiki_R6_RalucaXia.template_default =  'Research'
-let wiki_R6_RalucaXia.template_ext = '.html'
+" let wiki_R6_RalucaXia = {}
+" let wiki_R6_RalucaXia.path = '$HOME/Dropbox/workspace/svn/Article-Feynman-Kac-Formula-FractionalBM/Rough-in-time-Xia/vimwiki'
+" let wiki_R6_RalucaXia.template_path = '$HOME/Dropbox/vimwiki/templates'
+" let wiki_R6_RalucaXia.template_default =  'Research'
+" let wiki_R6_RalucaXia.template_ext = '.html'
 "}}}
 "{{{ wiki_TeachingTools
 let wiki_TeachingTools = {}
@@ -84,15 +98,21 @@ let wiki_TeachingTools.auto_toc = 1
 let wiki_TeachingTools.markdown_toc = 1
 let wiki_TeachingTools.template_ext = '.tpl'
 "}}}
+"{{{ wiki_github_Homepage
+let wiki_Github_Homepage = {}
+let wiki_Github_Homepage.path = '$HOME/Dropbox/workspace/svn/chenle02.github.io/vimwiki'
+let wiki_Github_Homepage.path_html = '$HOME/Dropbox/workspace/svn/chenle02.github.io/'
+let wiki_Github_Homepage.template_path = '$HOME/Dropbox/vimwiki/templates/'
+let wiki_Github_Homepage.template_default =  'Github'
+let wiki_Github_Homepage.template_ext = '.html'
+"}}}
 let g:vimwiki_list = [
       \ wiki_default,
+      \ wiki_Math7800_2022Fall,
+      \ wiki_Math6030_2022Fall,
       \ wiki_Math7210_2022Spring,
-      \ wiki_Math362_2021Spring,
-      \ wiki_Math221_2021Spring,
-      \ wiki_Math221_2020Fall,
-      \ wiki_Math5870_2021Fall,
-      \ wiki_STAT3600_2021Fall,
       \ wiki_Homepage,
+      \ wiki_Github_Homepage,
       \ ]
 "}}}
 "{{{ Other setups
