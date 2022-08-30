@@ -1,10 +1,10 @@
 -- Set up for lspconfig
 
 -- require'lspconfig'.pyright.setup{on_attach=require'completion'.on_attach}
-require("lspconfig").pyright.setup({})
-require("lspconfig").sumneko_lua.setup({})
-require'lspconfig'.ltex.setup{}
-require'lspconfig'.texlab.setup{}
+-- require("lspconfig").pyright.setup({})
+-- require("lspconfig").sumneko_lua.setup({})
+-- require'lspconfig'.ltex.setup{}
+-- require'lspconfig'.texlab.setup{}
 local nvim_lsp = require('lspconfig')
 
 -- Use an on_attach function to only map the following keys

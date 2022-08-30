@@ -64,6 +64,13 @@ let wiki_Math7800_2022Fall.template_default =  'Course'
 let wiki_Math7800_2022Fall.template_ext = '.html'
 "}}}
 "{{{ wiki_Math6030_2022Fall
+let wiki_Math7000_2022Fall = {}
+let wiki_Math7000_2022Fall.path = '$HOME/Dropbox/Teaching/svn_teaching/2022_Fall_Math7000/vimwiki'
+let wiki_Math7000_2022Fall.template_path = '$HOME/Dropbox/Teaching/svn_teaching/2022_Fall_Math7000/vimwiki/templates/'
+let wiki_Math7000_2022Fall.template_default =  'Course'
+let wiki_Math7000_2022Fall.template_ext = '.html'
+"}}}
+"{{{ wiki_Math6030_2022Fall
 let wiki_Math6030_2022Fall = {}
 let wiki_Math6030_2022Fall.path = '$HOME/Dropbox/Teaching/svn_teaching/2022_Fall_Math6030/vimwiki'
 let wiki_Math6030_2022Fall.template_path = '$HOME/Dropbox/Teaching/svn_teaching/2022_Fall_Math6030/vimwiki/templates/'
@@ -109,7 +116,7 @@ let wiki_Github_Homepage.template_ext = '.html'
 let g:vimwiki_list = [
       \ wiki_default,
       \ wiki_Math7800_2022Fall,
-      \ wiki_Math6030_2022Fall,
+      \ wiki_Math7000_2022Fall,
       \ wiki_Math7210_2022Spring,
       \ wiki_Homepage,
       \ wiki_Github_Homepage,
@@ -134,5 +141,5 @@ autocmd FileType vimwiki let @u='di(F[a[|Pf]xf]a]da('
 " https://github.com/dhruvasagar/vim-table-mode/issues/110
 " let g:vimwiki_table_mappings=0
 " let g:vimwiki_table_auto_fmt=0
-au! BufEnter,BufRead,BufNewFile *.wiki set filetype=vimwiki.tex
+au! BufEnter,BufRead,BufNewFile *.wiki set filetype=vimwiki
 " }}}

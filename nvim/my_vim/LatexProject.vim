@@ -38,7 +38,7 @@ function! RunLuaLatex(TexFileName)
   " echom execstr
   " let g:asyncrun_exit = 'silent :lua require("notify")("Asyncrun has done~!", "info")'
 endfunction
-autocmd FileType tex noremap <silent> <leader><leader> :call RunLuaLatex(expand("%"))<cr>
+autocmd FileType tex noremap <silent> <leader><CR> :call RunLuaLatex(expand("%"))<cr>
 " autocmd FileType tex noremap <leader><leader> :update<bar>:AsyncRun! lualatex --shell-escape -synctex=1 %<CR>
 " autocmd BufRead,BufNewFile,BufEnter,BufWinEnter tex <leader><leader> :update<bar>:AsyncRun! lualatex --shell-escape -synctex=1 %<CR>
 
@@ -67,6 +67,19 @@ function! MyUpdateBib()
   let execstr = ":r " . expand("%:r") . "_biber.bib"
   " echom execstr
   exec execstr
+endfunction
+
+function! RunBlackTex()
+  exec "w!"
+  " echom "Run Lualatex now..."
+  " If the file output.tex exists, remove it
+  if filereadable("output.tex")
+    exec "!rm output.tex"
+  endif
+  let execstr="!blacktex --keep-dollar-math --keep-comments " . expand("%") . "> output.tex"
+  echom execstr
+  silent exec execstr
+  exec "vertical diffsplit output.tex"
 endfunction
 
 autocmd FileType,BufEnter,BufWinEnter yaml noremap ff :call SyncYamlZathura()<CR>
@@ -252,6 +265,14 @@ augroup END
 "   " exec "normal! <c-o>"
 " endfunction
 " nmap <unique><silent> Q :call My_Q()<cr>
+let g:latexfmt_verbatim_envs = [
+      \ 'equation',
+      \ 'align',
+      \ 'eqnarray',
+      \ 'gather',
+      \ 'figure',
+      \ 'tikzpicture',
+      \ '\(\\)\@1<!\[']
 nmap <unique><silent> Q <Plug>latexfmt_format | normal <c-o>
 " }}}
 

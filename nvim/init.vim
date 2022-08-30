@@ -7,7 +7,6 @@
 set guicursor=
 
 set foldmethod=marker
-let g:python3_host_prog = '/usr/local/bin/python3'
 set nowrap
 set spell
 set spelllang=en
@@ -23,7 +22,16 @@ set splitright
 set autochdir
 set timeoutlen=800
 set backspace=0
-" set termguicolors
+
+" set notermguicolors
+if has("termguicolors")     " set true colors
+    set t_8f=\[[38;2;%lu;%lu;%lum
+    set t_8b=\[[48;2;%lu;%lu;%lum
+    hi! Normal ctermbg=NONE guibg=NONE
+    hi! NonText ctermbg=NONE guibg=NONE
+endif
+set termguicolors
+set background=dark
 
 " Tab related
 set tabstop=2
@@ -63,7 +71,9 @@ let g:ruby_host_prog = '/usr/bin/ruby2.7'
 
 nnoremap qw :wq!<cr>
 let g:syntastic_python_pylint_post_args="--max-line-length=120"
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = '/usr/bin/python'
+" let g:python3_host_prog = '/usr/local/bin/python3.10'
+" let g:python3_host_prog = '/usr/local/bin/python3'
 let g:pymode_lint_ignore = ["E501"]
 "{{{ Some setup for the temporary files
 " https://medium.com/@Aenon/vim-swap-backup-undo-git-2bf353caa02f
@@ -275,7 +285,7 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'preservim/tagbar'
     Plug 'xolox/vim-easytags'
     Plug 'dyng/ctrlsf.vim'
-    Plug 'lambdalisue/fern.vim'
+    Plug 'lambdalisue/fern.vim', { 'branch': 'main' }
     Plug 'lambdalisue/nerdfont.vim'
     Plug 'lambdalisue/fern-renderer-nerdfont.vim'
     Plug 'LumaKernel/fern-mapping-fzf.vim'
@@ -307,10 +317,24 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-speeddating'
     Plug 'petRUShka/vim-sage'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'nvim-lua/completion-nvim'
+    " Plug 'nvim-lua/completion-nvim'
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'hrsh7th/nvim-compe'
+    " Plug 'hrsh7th/nvim-compe'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-copilot'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-calc'
+    Plug 'tzachar/fuzzy.nvim'
+    Plug 'tzachar/cmp-fuzzy-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'tamago324/cmp-zsh'
+    Plug 'f3fora/cmp-spell'
+    Plug 'andersevenrud/cmp-tmux'
+    Plug 'Shougo/deol.nvim'
+    Plug 'quangnguyen30192/cmp-nvim-ultisnips'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
     Plug 'nvim-telescope/telescope-fzy-native.nvim'
@@ -374,6 +398,14 @@ silent! if plug#begin('~/.config/nvim/plugged')
     Plug 'github/copilot.vim'
     Plug 'machakann/vim-swap'
     Plug 'liuchengxu/vista.vim'
+    " Plug 'gelguy/wilder.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+    Plug 'folke/which-key.nvim'
+    Plug 'arnoudbuzing/wolfram-vim'
+    Plug 'anufrievroman/vim-angry-reviewer'
+    Plug 'kevinhwang91/nvim-bqf'
+    " Plug 'nixprime/cpsm'
     " Plug 'daeyun/vim-matlab'
     " {{{ Some removed.
     " Plug 'thalesmello/webcomplete.vim'
@@ -454,7 +486,7 @@ filetype plugin indent on    " required
 autocmd BufRead,BufNewFile *.tex set filetype=tex
 autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=vimwiki
 autocmd BufRead ~/Dropbox/workspace/svn/Job-applications/homepage/Emory/index.html nnoremap <leader><leader>  :w! <cr>  :!~/Dropbox/workspace/svn/Job-applications/homepage/Emory/upload-Emory.sh <cr>
-autocmd FileType lua nmap <Space> :SlimeSendCurrentLine<CR>j
+autocmd FileType lua nmap <Space> :SlimeSendCurrentLine<CR>
 augroup filetypedetect
   au! BufRead,BufNewFile *.m,*.oct set filetype=octave
 augroup END
@@ -568,6 +600,7 @@ source ~/.config/nvim/my_vim/my_ctrlsf.vim
 source ~/.config/nvim/my_vim/my_vim-wordy.vim
 source ~/.config/nvim/my_vim/my_tabline.vim
 source ~/.config/nvim/my_vim/my_vim-tex-fold.vim
+" source ~/.config/nvim/my_vim/my_wider-nvim.vim
 " source ~/.config/nvim/my_vim/my_ale.vim
 source ~/.config/nvim/my_vim/my_vifm.vim
 source ~/.config/nvim/my_vim/my_vim-abook.vim
@@ -607,6 +640,7 @@ source ~/.config/nvim/my_vim/my_vim-windowsap.vim
 source ~/.config/nvim/my_vim/my_yajs.vim
 source ~/.config/nvim/my_vim/my_vim-matchup.vim
 source ~/.config/nvim/my_vim/my_fern.vim
+source ~/.config/nvim/my_vim/my_AngryReviewer.vim
 source ~/.config/nvim/my_vim/my_asyncrun.vim
 " source ~/.config/nvim/my_vim/org.vim
 source ~/.config/nvim/my_vim/spelunker_source.vim
@@ -617,11 +651,11 @@ source ~/.config/nvim/my_vim/my_ncm2.vim
 " :r !ls nvim_lua
 source ~/.config/nvim/lua/le/telescope/init.lua
 source ~/.config/nvim/lua/plug-comment.lua
-source ~/.config/nvim/lua/plug-compe.lua
+" source ~/.config/nvim/lua/plug-compe.lua
+source ~/.config/nvim/lua/nvim-cmp.lua
 source ~/.config/nvim/lua/plug-diffview2.lua
 source ~/.config/nvim/lua/plug-gitsigns.lua
 source ~/.config/nvim/lua/plug-iswap.lua
-source ~/.config/nvim/lua/plug-lsp_installer.lua
 source ~/.config/nvim/lua/plug-lspconfig.lua
 " source ~/.config/nvim/lua/plug-neoclip.lua
 " source ~/.config/nvim/lua/plug-neogit.lua
@@ -643,6 +677,7 @@ source ~/.config/nvim/lua/plug-toggleterm.lua
 " source ~/.config/nvim/lua/plug-sqlite.lua
 " source ~/.config/nvim/lua/plug-telescop-doc.lua
 source ~/.config/nvim/lua/plug-telescope-bibtex.lua
+source ~/.config/nvim/lua/plug-nvim-bqf.lua
 "}}}
 "{{{ some autocmd group for snippets
 augroup snippets
@@ -682,8 +717,8 @@ set background=dark
 " colorscheme nvcode
 " colorscheme highlite
 " colorscheme iceberg
-" colorscheme seoul256
-colorscheme everforest
+colorscheme seoul256
+" colorscheme everforest
 " let g:everforest_background = 'hard'
 " let g:airline_theme = 'everforest'
 " colorscheme OceanicNext
@@ -693,15 +728,16 @@ colorscheme everforest
 " Make transparent background in vim
 " hi Normal guibg=NONE ctermbg=NONE
 syntax enable
-" set termguicolors
 " set background=dark
 " set term=screen-256color
-" highlight Pmenu ctermbg=bg ctermfg=white guibg=DarkGreen
-highlight Pmenu ctermbg=black ctermfg=white guibg=Non
+highlight Pmenu ctermbg=bg ctermfg=white guibg=DarkGreen
+" highlight Pmenu ctermbg=black ctermfg=white guibg=Non
+" highlight Pmenu ctermbg=black ctermfg=white guibg=Non
 highlight PmenuSel ctermbg=DarkYellow ctermfg=white guibg=Non
-highlight CursorLine ctermbg=black
-highlight CursorColumn ctermbg=black
-highlight CursorColumn ctermbg=black
+" highlight CursorLine ctermbg=black
+" highlight CursorColumn ctermbg=black
+highlight CursorLine   ctermbg=DarkGray
+highlight CursorColumn ctermbg=DarkGray
 highlight Visual ctermbg=DarkGreen ctermfg=bg
 highlight ColorColumn ctermbg=black
 set foldmethod=marker
@@ -712,7 +748,10 @@ noremap yf :let @+=expand("%:p:h")<CR>
 " The following is for the mathematica script file type
 augroup wls
   au!
-  autocmd BufNewFile,BufRead *.wls set filetype=wls
+  autocmd BufNewFile,BufRead *.wls set filetype=wl
+  autocmd BufNewFile,BufRead *.wl set syntax=wl
+  autocmd BufNewFile,BufRead *.wls set syntax=wl
+  autocmd BufNewFile,BufRead *.m set syntax=wl
 augroup END
 nnoremap <silent> <leader>gg :LazyGit<CR>
 nnoremap <space>p :PencilToggle<cr>

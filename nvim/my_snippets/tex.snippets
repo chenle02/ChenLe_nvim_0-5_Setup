@@ -29,8 +29,9 @@ global !p
 # texMathZones = ['texMathZone' + x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z', 'AmsA', 'AmsB', 'AmsC', 'AmsD', 'AmsE', 'AmsF', 'AmsG', 'AmsAS', 'AmsBS', 'AmsCS', 'AmsDS', 'AmsES', 'AmsFS', 'AmsGS' ]]
 # texIgnoreMathZones = ['texMathText']
 # The following two lines are from https://github.com/lervag/vimtex/issues/1863
-# texMathZones = ['texMathRegion' + x for x in ['', 'X', 'XX', 'Env', 'EnvStarred', 'Ensured']]
-texMathZones = ['texMathZone' + x for x in ['', 'X', 'XX', 'Env', 'EnvStarred', 'Ensured']]
+# texMathZones = ['texMathZone' + x for x in ['', 'X', 'XX', 'Env', 'EnvStarred', 'Ensured']]
+# The following is from https://github.com/lervag/vimtex/issues/2470 after Version Vimtex 2.11
+texMathZones = ['texMathZone' + x for x in ['LI', 'LD', 'TI', 'TD', 'Env', 'EnvStarred', 'Ensured']]
 texIgnoreMathZones = ['texMathTextArg']
 texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
 texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
@@ -108,7 +109,7 @@ endsnippet
 #}}}
 #{{{ ibid "ibid"
 snippet ibid "ibid"
-{\it ibid}
+\textit{ibid}
 endsnippet
 #}}}
 #{{{ vf "vfill"
@@ -195,7 +196,7 @@ endsnippet
 priority 500
 #{{{ ef "\eqref"
 snippet ef "\eqref"
-\eqref{${1:${VISUAL} }}$0
+~\eqref{${1:${VISUAL}}}$0
 endsnippet
 #}}}
 #{{{ dp "\displaystyle"
@@ -205,19 +206,25 @@ endsnippet
 #}}}
 #{{{ rf "\ref"
 snippet rf "\ref"
-\ref{${1:${VISUAL} }}$0
+~\ref{${1:${VISUAL}}}$0
 endsnippet
 #}}}
 #{{{ lb "\label"
 snippet lb "\label"
-\label{${1:${VISUAL} }}$0
+\label{${1:${VISUAL}}}$0
 endsnippet
 #}}}
 #{{{ cit "\cite{}"
 snippet cit "\cite{}"
-\cite{${1:${VISUAL} }} $0
+~\cite{${1}}
 endsnippet
 #}}}
+# The following is for testing
+snippet wow
+`!p
+vim.command('normal gElr~')
+`\cite{${1}}
+endsnippet
 #{{{ dm "Math \[ ... \] " wA
 snippet dm "Math" wA
 \[
@@ -378,7 +385,7 @@ endsnippet
 context "math()"
 #{{{ wht "widehat" wA
 snippet wht "widehat" wA
-\widehat{${1:${VISUAL}} } $0
+\widehat{${1:${VISUAL}}}$0
 endsnippet
 #}}}
 context "math()"
@@ -487,6 +494,12 @@ context "math()"
 #{{{ lr( "left( right)" i
 snippet lr( "left( right)" i
 \left( ${1:${VISUAL}} \right) $0
+endsnippet
+#}}}
+context "math()"
+#{{{ lr\| "left\| right\|" i
+snippet lr\| "left\| right\|" i
+\left\|${1:${VISUAL}}\right\|$0
 endsnippet
 #}}}
 context "math()"
@@ -807,9 +820,21 @@ snippet ** "cdot" iA
 endsnippet
 #}}}
 context "math()"
+#{{{ := ">>" iA
+snippet := ":=" iA
+\coloneqq 
+endsnippet
+#}}}
+context "math()"
+#{{{ =: ">>" iA
+snippet =: "=:" iA
+\eqqcolon 
+endsnippet
+#}}}
+context "math()"
 #{{{ >> ">>" iA
 snippet >> ">>" iA
-\gg
+\gg 
 endsnippet
 #}}}
 context "math()"
@@ -1028,7 +1053,7 @@ snippet VariationEeq "Variational constant E in XChen16AOP"
 Let $W^{1,2}(\R^d)$ be the Sobolev space of all functions $g\in\R^d$ such that
 both $g$ and $\nabla g\in L^2(\R^d)$. Denote
 \begin{align*}
-  \mathcal{A}_d := \bigg\\{g(\cdot,\circ)\:: & \: g(s,\circ)\in W^{1,2}(\R^d), \: g(s,\cdot)\in L^2(\R^d), \: \forall s\in [0,1]\\\\
+  \mathcal{A}_d \coloneqq \bigg\\{g(\cdot,\circ)\:: & \: g(s,\circ)\in W^{1,2}(\R^d), \: g(s,\cdot)\in L^2(\R^d), \: \forall s\in [0,1]\\\\
                                             & \quad \text{and} \quad \int_0^1\int_{\R^d}\left|\nabla_x g(s,x)\right|^2\d x\d s <\infty\bigg\\}
 \end{align*}
 and
